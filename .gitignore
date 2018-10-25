@@ -1,0 +1,67 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# skip generated css
+src/**/*.css
+
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+dist
+*.log*
+*.css
+
+# npm, yarn
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+### IntelliJ
+/out/
+.idea
+.idea/
+*.iws
+*.iml
+.idea_modules/
+atlassian-ide-plugin.xml
+
+
+### Eclipse
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.project
+*.launch
+.classpath
+.target
+
+### Maven template
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
