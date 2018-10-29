@@ -1,21 +1,32 @@
 import * as React from 'react';
 import './SptHeader.css';
-import NavItem from 'reactstrap/lib/NavItem';
-import {Route, Router, browserHistory} from 'react-router';
-import SptLogin from 'src/components/SptLogin';
-import SptUser from 'src/components/SptUser';
+import {NavLink} from 'react-router-dom';
 
 class SptHeader extends React.Component {
     public render() {
         return (
-            <Router history={}>
-                <NavItem>
-                    <Route path="users" component={SptLogin}/>
-                </NavItem>
-                <NavItem>
-                    <Route path="users" component={SptUser}/>
-                </NavItem>
-            </Router>);
+                <div className="header">
+                    <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+                        <a className="navbar-brand">Личный кабинет</a>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#collapsibleNavbar">
+                            <span className="navbar-toggler-icon"/>
+                        </button>
+                        <div className="collapse navbar-collapse" id="collapsibleNavbar">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item">
+                                    <NavLink exact to="/user"><a className="nav-link">Пользователи</a></NavLink>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul className="navbar-nav navbar-right">
+                            <li className="nav-item">
+                                <NavLink exact to="/login"><a className="nav-link">Войти</a></NavLink>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+        );
     }
 }
 
