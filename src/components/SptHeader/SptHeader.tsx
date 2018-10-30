@@ -2,7 +2,7 @@ import * as React from 'react';
 import './SptHeader.css';
 import {NavLink} from 'react-router-dom';
 
-class SptHeader extends React.Component {
+export default class SptHeader extends React.Component {
     public render() {
         return (
                 <div className="header">
@@ -29,5 +29,3 @@ class SptHeader extends React.Component {
         );
     }
 }
-
-export default SptHeader;
