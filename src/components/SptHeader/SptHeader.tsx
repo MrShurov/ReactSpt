@@ -17,6 +17,9 @@ export default class SptHeader extends React.Component {
                                 <li className="nav-item">
                                     <NavLink exact to="/user"><a className="nav-link">Пользователи</a></NavLink>
                                 </li>
+                                <li className="nav-item">
+                                    <NavLink exact to="/good"><a className="nav-link">Оборудование</a></NavLink>
+                                </li>
                             </ul>
                         </div>
                         <ul className="navbar-nav navbar-right">
