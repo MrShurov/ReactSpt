@@ -1,6 +1,7 @@
 import {/*AxiosError, */AxiosResponse} from 'axios';
 import RestClient from './RestClient';
 import {ISptStore} from '../models/SptStore';
+import {Good} from '../models/Good';
 
 const baseUrl: string = 'http://localhost:8080';
 const getAll: string = 'goods/';
@@ -31,7 +32,9 @@ export class SptGoodService implements ISptGoodService {
     }
 
     public parseData(response: AxiosResponse) {
-        const resp: string = JSON.stringify(response);
-        this.sptStore.sptGoodStore.setGoodName(resp);
+        const good = Good.create({
+            goodName: JSON.stringify(response)
+        });
+        this.sptStore.sptGoodStore.add(good);
     }
 }

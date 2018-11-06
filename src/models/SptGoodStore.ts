@@ -1,12 +1,15 @@
 import {Instance, types} from 'mobx-state-tree';
+import {Good, IGood} from './Good';
 
 export const SptGoodStore = types
     .model('SptGoodStore', {
-        goodName: types.string,
+        goods: types.optional(types.array(Good),[]),
         isLoading: types.boolean
     }).actions(self => ({
-        setGoodName(name: string) {
-            self.goodName = name;
+        add(good: IGood) {
+            if (self.goods.indexOf(good) === -1) {
+                self.goods.push(good);
+            }
         },
         setLoading(loading: boolean) {
             self.isLoading = loading;
