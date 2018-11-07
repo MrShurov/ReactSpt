@@ -4,10 +4,21 @@ import './SptLogin.css';
 
 export default class SptLogin extends React.Component {
 
+    public handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const data = new FormData();
+        data.append('username','Shurov');
+        data.append('password', 'Secret');
+        fetch('http://localhost:8080/login', {
+            body: data,
+            method: 'POST',
+        });
+    }
+
     public render() {
         return (
             <div className="container">
-                <form action="http://localhost:8080/login" method="post">
+                <form onSubmit={this.handleSubmit}>
                     <h1 className="text-center">Вход в личный кабинет</h1>
                     <div className="form-group d-flex flex-row justify-content-center">
                         <div className="col-6">

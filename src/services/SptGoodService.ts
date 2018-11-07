@@ -3,8 +3,7 @@ import RestClient from './RestClient';
 import {ISptStore} from '../models/SptStore';
 import {Good} from '../models/Good';
 
-const baseUrl: string = 'http://localhost:8080';
-const getAll: string = 'goods/';
+const baseUrl: string = 'http://localhost:8080/goods/';
 
 export interface ISptGoodService {
     getGoods: () => void;
@@ -22,8 +21,9 @@ export class SptGoodService implements ISptGoodService {
 
     public getGoods() {
         this.sptStore.sptGoodStore.setLoading(true);
-        const path: string = baseUrl.concat(getAll);
-        return this.restClient.get(path,
+        const requestUrl = 'http://localhost:8080/goods';
+        const proxy = 'https://cors-anywhere.herokuapp.com/';
+        return this.restClient.get(proxy+requestUrl,
             (response) => this.parseData(response),
             (error) => error,
             () => {

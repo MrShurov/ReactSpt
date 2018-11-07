@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './SptHeader.css';
 import {NavLink} from 'react-router-dom';
+import {NavItem} from 'reactstrap';
 
 export default class SptHeader extends React.Component {
     public render() {
@@ -14,18 +15,18 @@ export default class SptHeader extends React.Component {
                         </button>
                         <div className="collapse navbar-collapse" id="collapsibleNavbar">
                             <ul className="navbar-nav mr-auto">
-                                <li className="nav-item">
-                                    <NavLink exact to="/user"><a className="nav-link">Пользователи</a></NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink exact to="/good"><a className="nav-link">Оборудование</a></NavLink>
-                                </li>
+                                <NavItem>
+                                    <NavLink className="nav-link" exact to="/user">Пользователи</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link" exact to="/good">Оборудование</NavLink>
+                                </NavItem>
                             </ul>
                         </div>
                         <ul className="navbar-nav navbar-right">
-                            <li className="nav-item">
-                                <NavLink exact to="/login"><a className="nav-link">Войти</a></NavLink>
-                            </li>
+                            <NavItem>
+                                <NavLink className="nav-link" exact to="/login">Войти</NavLink>
+                            </NavItem>
                         </ul>
                     </nav>
                 </div>
