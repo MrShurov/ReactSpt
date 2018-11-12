@@ -21,14 +21,10 @@ export class SptGoodService implements ISptGoodService {
 
     public getGoods() {
         this.sptStore.sptGoodStore.setLoading(true);
-        const requestUrl = 'http://localhost:8080/goods';
-        const proxy = 'https://cors-anywhere.herokuapp.com/';
-        return this.restClient.get(proxy+requestUrl,
+        const requestUrl = 'http://localhost:8080/goods/';
+        return this.restClient.get(requestUrl,
             (response) => this.parseData(response),
-            (error) => error,
-            () => {
-                this.sptStore.sptGoodStore.setLoading(false);
-            });
+            (error) => error);
     }
 
     public parseData(response: AxiosResponse) {

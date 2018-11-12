@@ -1,19 +1,16 @@
 import * as React from 'react';
 import './SptLogin.css';
+import {ISptLoginService, SptLoginService} from '../../services/SptLoginService';
 
 
 export default class SptLogin extends React.Component {
 
+    private sptLoginService: ISptLoginService = new SptLoginService();
+
     public handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData();
-        data.append('username','Shurov');
-        data.append('password', 'Secret');
-        fetch('http://localhost:8080/login', {
-            body: data,
-            method: 'POST',
-        });
-    }
+        this.sptLoginService.login();
+    };
 
     public render() {
         return (
