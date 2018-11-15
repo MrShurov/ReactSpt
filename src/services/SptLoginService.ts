@@ -15,7 +15,7 @@ export class SptLoginService implements ISptLoginService {
     }
 
     public login() {
-        const requestUrl = 'http://localhost:8080/login';
+        const requestUrl = '/login';
         const data = new FormData();
         data.append('username','Shurov');
         data.append('password', 'secret');
