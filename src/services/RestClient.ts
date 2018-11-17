@@ -2,10 +2,8 @@ import axios, {AxiosInstance, AxiosResponse, AxiosError} from 'axios';
 
 export default class RestClient {
     private axiosRest: AxiosInstance;
-    private baseUrl: string;
 
-    constructor(baseUrl: string) {
-        this.baseUrl = baseUrl;
+    constructor() {
         this.axiosRest = axios.create({
             timeout: 2000
         });
@@ -19,7 +17,7 @@ export default class RestClient {
         return this.axiosRest
             .get(path)
             .then((result: AxiosResponse) => {
-                global.console.log(`EZ ${this.baseUrl}`);
+                global.console.log(`EZ ${path}`);
                 successed(result);
             })
             .catch((error: AxiosError) => {

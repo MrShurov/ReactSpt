@@ -1,38 +1,84 @@
 import * as React from 'react';
 import './SptLogin.css';
 import {ISptLoginService, SptLoginService} from '../../services/SptLoginService';
+import {Button, Col, FormGroup, Input, Label} from 'reactstrap';
 
-
-export default class SptLogin extends React.Component {
+export default class SptLogin extends React.Component <{}, { username: string, password: string, error: boolean }> {
 
     private sptLoginService: ISptLoginService = new SptLoginService();
 
+    constructor(props: Readonly<{}>) {
+        super(props);
+        this.state = {
+            error: false,
+            password: '',
+            username: ''};
+    }
+
+    public validateForm() {
+        return this.state.username.length > 0 && this.state.password.length > 0;
+    }
+
+    public handleChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({username: event.target.value});
+    };
+
+    public handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({password: event.target.value});
+    };
+
     public handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
-        this.sptLoginService.login();
+        this.setState({
+            error : this.sptLoginService.login(event.currentTarget)
+        });
     };
+
+    public errorHandler(){
+            if (this.state.error) {
+                return <div className="alert alert-danger">Invalid username or password</div>;
+            }
+            return this.props.children;
+        }
 
     public render() {
         return (
-            <div className="container">
+            <div className="Login">
+                <Col md={3}>
                 <form onSubmit={this.handleSubmit}>
-                    <h1 className="text-center">Вход в личный кабинет</h1>
-                    <div className="form-group d-flex flex-row justify-content-center">
-                        <div className="col-6">
-                            <input className="form-control" type="text" name="username" id="username"
-                                   placeholder="UserName"/>
-                        </div>
-                    </div>
-                    <div className="form-group d-flex flex-row justify-content-center">
-                        <div className="col-6">
-                            <input className="form-control" type="password" name="password" id="password"
-                                   placeholder="Password"/>
-                        </div>
-                    </div>
-                    <div className="d-flex flex-row justify-content-center">
-                        <input type="submit" className="btn btn-lg btn-primary" value="Вход"/>
-                    </div>
+                    <FormGroup>
+                        <Label for="username" sm={10}>Username:</Label>
+                        <Col sm={10}>
+                        <Input
+                            autoFocus
+                            name="username"
+                            id="username"
+                            onChange={this.handleChangeUsername}
+                            value={this.state.username}
+                        />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="password" sm={2}>Password:</Label>
+                        <Col sm={10}>
+                        <Input
+                            name="password"
+                            id="password"
+                            onChange={this.handleChangePassword}
+                            value={this.state.password}
+                            type="password"
+                        />
+                        </Col>
+                    </FormGroup>
+                    {this.errorHandler()}
+                    <Button
+                        disabled={!this.validateForm()}
+                        type="submit"
+                    >
+                        Login
+                    </Button>
                 </form>
+                </Col>
             </div>
         );
     }

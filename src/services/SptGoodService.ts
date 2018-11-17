@@ -3,8 +3,6 @@ import RestClient from './RestClient';
 import {ISptStore} from '../models/SptStore';
 import {Good} from '../models/Good';
 
-const baseUrl: string = 'http://localhost:8080/goods/';
-
 export interface ISptGoodService {
     getGoods: () => void;
 }
@@ -15,15 +13,15 @@ export class SptGoodService implements ISptGoodService {
     private sptStore: ISptStore;
 
     constructor(sptStore: ISptStore) {
-        this.restClient = new RestClient(baseUrl);
+        this.restClient = new RestClient();
         this.sptStore = sptStore;
     }
 
     public getGoods() {
         this.sptStore.sptGoodStore.setLoading(true);
-        const requestUrl = 'http://localhost:8080/goods/';
+        const requestUrl = '/goods/';
         return this.restClient.get(requestUrl,
-            (response) => this.parseData(response),
+            (response) => response,
             (error) => error);
     }
 

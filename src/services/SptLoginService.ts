@@ -1,9 +1,9 @@
 import RestClient from './RestClient';
 
-const baseUrl: string = 'http://localhost:8080/login';
+let hasError: boolean;
 
 export interface ISptLoginService {
-    login: () => void;
+    login: (form: HTMLFormElement) => boolean;
 }
 
 export class SptLoginService implements ISptLoginService {
@@ -11,16 +11,17 @@ export class SptLoginService implements ISptLoginService {
     private restClient: RestClient;
 
     constructor() {
-        this.restClient = new RestClient(baseUrl);
+        this.restClient = new RestClient();
     }
 
-    public login() {
+    public login(form: HTMLFormElement) {
         const requestUrl = '/login';
-        const data = new FormData();
-        data.append('username','Shurov');
-        data.append('password', 'secret');
-        return this.restClient.post(requestUrl,data,
-            (response) => response,
-            (error) => error);
+        const data = new FormData(form);
+        this.restClient.post(requestUrl, data,
+            (response) => {hasError = false;
+                window.location.replace('http://localhost:3000/good');
+                },
+            (error) => hasError = true);
+        return hasError;
     }
 }

@@ -8,6 +8,7 @@ import {ISptStore, SptStore} from './models/SptStore';
 import registerServiceWorker from './registerServiceWorker';
 import SptBody from './components/SptBody/SptBody';
 
+
 const sptStore: ISptStore = SptStore.create({
     sptGoodStore: {
         good: [],
