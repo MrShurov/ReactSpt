@@ -1,14 +1,15 @@
 import * as React from 'react';
 import './SptLogin.css';
-import {ISptLoginService, SptLoginService} from '../../services/SptLoginService';
 import {Button, Col, FormGroup, Input, Label} from 'reactstrap';
+import RestClient from '../../services/RestClient';
 
 export default class SptLogin extends React.Component <{}, { username: string, password: string, error: boolean }> {
 
-    private sptLoginService: ISptLoginService = new SptLoginService();
+    private restClient: RestClient;
 
     constructor(props: Readonly<{}>) {
         super(props);
+        this.restClient = new RestClient();
         this.state = {
             error: false,
             password: '',
@@ -29,9 +30,7 @@ export default class SptLogin extends React.Component <{}, { username: string, p
 
     public handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
-        this.setState({
-            error : this.sptLoginService.login(event.currentTarget)
-        });
+        this.login(event.currentTarget);
     };
 
     public errorHandler(){
@@ -40,6 +39,16 @@ export default class SptLogin extends React.Component <{}, { username: string, p
             }
             return this.props.children;
         }
+
+    public login(form: HTMLFormElement) {
+        const requestUrl = '/login';
+        const data = new FormData(form);
+        this.restClient.post(requestUrl, data,
+            (response) => {
+            window.location.replace('http://localhost:3000/good');
+            },
+            (error) => this.setState({error : true }));
+    }
 
     public render() {
         return (

@@ -10,11 +10,13 @@ export default class SptBody extends React.Component <{ sptStore: ISptStore }> {
 
     public render() {
         return (
-            <Switch>
-                <Route exact path="/user" render={() => (<SptUser/>)}/>
-                <Route exact path="/login" render={() => (<SptLogin/>)}/>
-                <Route exact path="/good" render={() => (<SptGood sptStore={this.props.sptStore}/>)}/>
-            </Switch>
+            <div className="wrapper">
+                <Switch>
+                    <Route exact path="/user" render={() => (<SptUser/>)}/>
+                    <Route exact path="/login" render={() => (<SptLogin/>)}/>
+                    <Route exact path="/good" render={() => (<SptGood sptStore={this.props.sptStore}/>)}/>
+                </Switch>
+            </div>
         );
     }
 }
