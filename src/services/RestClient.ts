@@ -17,11 +17,13 @@ export default class RestClient {
         return this.axiosRest
             .get(path)
             .then((result: AxiosResponse) => {
-                global.console.log(`EZ ${path}`);
+                global.console.log(`GET ${path}`);
+                global.console.log(`result: ${JSON.stringify(result)};`);
                 successed(result);
             })
             .catch((error: AxiosError) => {
-                global.console.log(`ERROR! GET ${path}`);
+                global.console.log(`ERROR! GET  ${path}`);
+                global.console.log(`error: ${JSON.stringify(error)};`);
                 errored(error);
             });
     }

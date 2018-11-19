@@ -11,8 +11,7 @@ import SptBody from './components/SptBody/SptBody';
 
 const sptStore: ISptStore = SptStore.create({
     sptGoodStore: {
-        good: [],
-        isLoading: false
+        good: []
     },
     sptUserStore:{
 

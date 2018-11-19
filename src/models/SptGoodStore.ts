@@ -1,18 +1,24 @@
 import {Instance, types} from 'mobx-state-tree';
-import {Good, IGood} from './Good';
+
+const Good = types.model({
+    goodName: types.string,
+});
 
 export const SptGoodStore = types
     .model('SptGoodStore', {
         goods: types.optional(types.array(Good),[]),
-        isLoading: types.boolean
-    }).actions(self => ({
-        add(good: IGood) {
-            if (self.goods.indexOf(good) === -1) {
-                self.goods.push(good);
+    })
+    .views(self => ({
+        checkSymbol(goodName: string): boolean {
+            return self.goods.find(i => i.goodName === goodName) !== undefined;
+        }
+    }))
+    .actions(self => ({
+        add(goodName: string) {
+            const foundItem = self.goods.find(i => i.goodName === goodName);
+            if (!foundItem) {
+                self.goods.push({goodName});
             }
-        },
-        setLoading(loading: boolean) {
-            self.isLoading = loading;
         }
     }));
 

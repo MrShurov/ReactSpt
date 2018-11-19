@@ -1,7 +1,6 @@
 import {/*AxiosError, */AxiosResponse} from 'axios';
 import RestClient from './RestClient';
 import {ISptStore} from '../models/SptStore';
-import {Good} from '../models/Good';
 
 export interface ISptGoodService {
     getGoods: () => void;
@@ -18,17 +17,16 @@ export class SptGoodService implements ISptGoodService {
     }
 
     public getGoods() {
-        this.sptStore.sptGoodStore.setLoading(true);
         const requestUrl = '/goods/';
         return this.restClient.get(requestUrl,
-            (response) => response,
+            (response) => {global.console.log(JSON.stringify(response.data));
+                this.parseData(response, this.sptStore);},
             (error) => error);
     }
 
-    public parseData(response: AxiosResponse) {
-        const good = Good.create({
-            goodName: JSON.stringify(response)
+    private parseData(response: AxiosResponse, sptStore : ISptStore) {
+        JSON.stringify(response, (key, value) => {
+            this.sptStore.sptGoodStore.add(value);
         });
-        this.sptStore.sptGoodStore.add(good);
     }
 }
