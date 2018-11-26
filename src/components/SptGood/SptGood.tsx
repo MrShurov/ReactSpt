@@ -29,13 +29,16 @@ export default class SptGood extends React.Component <{ sptStore: ISptStore }> {
     private sptGoodService: ISptGoodService = new SptGoodService(this.props.sptStore);
 
     public render() {
-
-        this.sptGoodService.getGoods();
-        this.props.sptStore.sptGoodStore.add('Ванны моечные разборные');
-        this.props.sptStore.sptGoodStore.add('Ванны моечные сварные');
+        const beforeRender = (() => {
+            this.sptGoodService.getGoods();
+            return this.props.children;
+        });
 
         return (
             <div>
+                <div>
+                    {beforeRender()}
+                </div>
                 <Row>
                 {this.props.sptStore.sptGoodStore.goods.map((good, idx) => <MyCard key={idx} goodName={good.goodName}/>)}
                 </Row>

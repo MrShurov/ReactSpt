@@ -13,7 +13,8 @@ export default class SptLogin extends React.Component <{}, { username: string, p
         this.state = {
             error: false,
             password: '',
-            username: ''};
+            username: ''
+        };
     }
 
     public validateForm() {
@@ -33,60 +34,63 @@ export default class SptLogin extends React.Component <{}, { username: string, p
         this.login(event.currentTarget);
     };
 
-    public errorHandler(){
-            if (this.state.error) {
-                return <div className="alert alert-danger">Invalid username or password</div>;
-            }
-            return this.props.children;
+    public errorHandler() {
+        if (this.state.error) {
+            return <div className="alert alert-danger">Invalid username or password</div>;
         }
+        return this.props.children;
+    }
 
     public login(form: HTMLFormElement) {
         const requestUrl = '/login';
         const data = new FormData(form);
         this.restClient.post(requestUrl, data,
             (response) => {
-            window.location.replace('http://localhost:3000/good');
+                window.location.replace('http://localhost:3000/good');
             },
-            (error) => this.setState({error : true }));
+            (error) => this.setState({error: true}));
     }
 
     public render() {
         return (
-            <div className="Login">
-                <Col md={3}>
-                <form onSubmit={this.handleSubmit}>
-                    <FormGroup>
-                        <Label for="username" sm={10}>Username:</Label>
-                        <Col sm={10}>
-                        <Input
-                            autoFocus
-                            name="username"
-                            id="username"
-                            onChange={this.handleChangeUsername}
-                            value={this.state.username}
-                        />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="password" sm={2}>Password:</Label>
-                        <Col sm={10}>
-                        <Input
-                            name="password"
-                            id="password"
-                            onChange={this.handleChangePassword}
-                            value={this.state.password}
-                            type="password"
-                        />
-                        </Col>
-                    </FormGroup>
-                    {this.errorHandler()}
-                    <Button
-                        disabled={!this.validateForm()}
-                        type="submit"
-                    >
-                        Login
-                    </Button>
-                </form>
+            <div>
+                <Col className="login" md={3}>
+                    <form onSubmit={this.handleSubmit}>
+                        <FormGroup>
+                            <Label for="username" sm={15}>Username:</Label>
+                            <Col sm={15}>
+                                <Input
+                                    autoFocus
+                                    name="username"
+                                    id="username"
+                                    onChange={this.handleChangeUsername}
+                                    value={this.state.username}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="password" sm={15}>Password:</Label>
+                            <Col sm={15}>
+                                <Input
+                                    name="password"
+                                    id="password"
+                                    onChange={this.handleChangePassword}
+                                    value={this.state.password}
+                                    type="password"
+                                />
+                            </Col>
+                        </FormGroup>
+                        {this.errorHandler()}
+                        <div className="text-center">
+                        <Button
+
+                            disabled={!this.validateForm()}
+                            type="submit"
+                        >
+                            Login
+                        </Button>
+                        </div>
+                    </form>
                 </Col>
             </div>
         );

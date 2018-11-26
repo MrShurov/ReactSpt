@@ -18,13 +18,13 @@ const sptStore: ISptStore = SptStore.create({
     }
 });
 
-class App extends React.Component {
+class App extends React.Component <{ sptStore: ISptStore }>{
 
     public render() {
         return (
             <div>
                 <SptHeader/>
-                <SptBody sptStore={sptStore}/>
+                <SptBody sptStore={this.props.sptStore}/>
             </div>
         );
     }
@@ -32,6 +32,6 @@ class App extends React.Component {
 
 ReactDOM.render(
     <BrowserRouter>
-        <App/>
+        <App sptStore={sptStore}/>
     </BrowserRouter>, document.getElementById('root') as HTMLElement);
 registerServiceWorker();
