@@ -1,18 +1,22 @@
 import {Instance, types} from 'mobx-state-tree';
 
-const Good = types.model({
+export const Good = types.model({
+    description: types.string,
     goodName: types.string,
+    imageUrl: types.string
 });
+
+export type Good = Instance<typeof Good>;
 
 export const SptGoodStore = types
     .model('SptGoodStore', {
         goods: types.optional(types.array(Good),[]),
     })
     .actions(self => ({
-        add(goodName: string) {
-            const foundItem = self.goods.find(i => i.goodName === goodName);
+        add(good : Good) {
+            const foundItem = self.goods.find(i => i.goodName === good.goodName);
             if (!foundItem) {
-                self.goods.push({goodName});
+                self.goods.push(good);
             }
         }
     }));

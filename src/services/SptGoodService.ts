@@ -1,6 +1,7 @@
 import RestClient from './RestClient';
 import {ISptStore} from '../models/SptStore';
 import {AxiosResponse} from 'axios';
+import {Good} from '../models/SptGoodStore';
 
 export interface ISptGoodService {
     getGoods: () => void;
@@ -31,16 +32,12 @@ export class SptGoodService implements ISptGoodService {
     }
 
     private parseData(response: AxiosResponse, sptStore: ISptStore) {
+        const goodName : string = 'goodName';
+        const description : string = 'description';
+        const imageUrl : string = 'imageUrl';
         JSON.stringify(response.data, (key, value) => {
             this.parseArrayOrValue(value, (item: object) => {
-                const s = item.toString();
-                if (s === '[object Object]') {
-                    {
-                        global.console.log();
-                    }
-                } else {
-                    return this.sptStore.sptGoodStore.add(item.toString());
-                }
+                this.sptStore.sptGoodStore.add(Good.create({goodName : item[goodName],description : item[description],imageUrl : item[imageUrl]}));
             });
             return value;
         });

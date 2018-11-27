@@ -6,18 +6,24 @@ import {Button, Card, CardBody, CardImg, Row} from 'reactstrap';
 import CardTitle from 'reactstrap/lib/CardTitle';
 import CardText from 'reactstrap/lib/CardText';
 
-const MyCard = (parameters: { goodName: string }) => {
+const MyCard = (parameters: { goodName: string, imageUrl : string, description : string }) => {
     const goodName = parameters.goodName;
+    const imageUrl = parameters.imageUrl;
+    const description = parameters.description;
     return (
         <div>
             <Card>
                 <CardImg top width="100%"
-                         src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180"
+                         src={imageUrl}
                          alt={goodName}/>
                 <CardBody>
                     <CardTitle>{goodName}</CardTitle>
-                    <CardText>Test</CardText>
+                    <div className="scroll-text">
+                        <CardText>{description}</CardText>
+                    </div>
+                    <div className="text-center">
                     <Button>Рассчитать</Button>
+                    </div>
                 </CardBody>
             </Card>
         </div>
@@ -40,7 +46,8 @@ export default class SptGood extends React.Component <{ sptStore: ISptStore }> {
                     {beforeRender()}
                 </div>
                 <Row>
-                {this.props.sptStore.sptGoodStore.goods.map((good, idx) => <MyCard key={idx} goodName={good.goodName}/>)}
+                {this.props.sptStore.sptGoodStore.goods.map((good, idx) => <MyCard key={idx} goodName={good.goodName}
+                                                                                   description={good.description} imageUrl={good.imageUrl}/>)}
                 </Row>
             </div>
         );
