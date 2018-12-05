@@ -2,7 +2,7 @@ import RestClient from './RestClient';
 
 
 export interface ISptCalculationService {
-    calculate: (data : FormData, goodName : string) => number;
+    calculate: (data : FormData, goodName : string) => void;
 }
 
 export class SptCalculationService implements ISptCalculationService {
@@ -17,7 +17,7 @@ export class SptCalculationService implements ISptCalculationService {
         const path = '/calculate/BathDemountable';
         this.restClient.post(path,
             data,
-            (response => ),
-            error => );
+            (response => global.console.log(response)),
+            error => global.console.log(error));
     }
 }
