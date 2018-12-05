@@ -44,9 +44,7 @@ export default class SptCard extends React.Component <{ goodName: string, imageU
     public handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        this.setState({
-            price: this.sptCalculationService.calculate(data, this.props.goodName)
-    });
+        this.sptCalculationService.calculate(data, this.props.goodName)
     };
 
     public render() {
