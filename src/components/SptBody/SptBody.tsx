@@ -4,18 +4,26 @@ import {ISptStore} from '../../models/SptStore';
 import SptUser from '../SptUser/SptUser';
 import SptLogin from '../SptLogin/SptLogin';
 import SptGood from '../SptGood/SptGood';
-import {Route, Switch} from 'react-router-dom';
+import {observer} from 'mobx-react';
 
+@observer
 export default class SptBody extends React.Component <{ sptStore: ISptStore }> {
 
     public render() {
         return (
             <div className="wrapper">
-                <Switch>
-                    <Route exact path="/user" render={() => (<SptUser sptStore={this.props.sptStore}/>)}/>
-                    <Route exact path="/login" render={() => (<SptLogin/>)}/>
-                    <Route exact path="/good" render={() => (<SptGood sptStore={this.props.sptStore}/>)}/>
-                </Switch>
+                {this.props.sptStore.current.mode === 'user'
+                    ? <SptUser sptStore={this.props.sptStore}/>
+                    : ''
+                }
+                {this.props.sptStore.current.mode === 'login'
+                    ? <SptLogin/>
+                    : ''
+                }
+                {this.props.sptStore.current.mode === 'goods'
+                    ? <SptGood sptStore={this.props.sptStore}/>
+                    : ''
+                }
             </div>
         );
     }

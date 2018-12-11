@@ -10,6 +10,9 @@ import SptBody from './components/SptBody/SptBody';
 
 
 const sptStore: ISptStore = SptStore.create({
+    current: {
+        mode: 'login'
+    },
     sptGoodStore: {
         good: []
     },
@@ -23,7 +26,7 @@ class App extends React.Component <{ sptStore: ISptStore }>{
     public render() {
         return (
             <div>
-                <SptHeader/>
+                <SptHeader sptStore={this.props.sptStore}/>
                 <SptBody sptStore={this.props.sptStore}/>
             </div>
         );

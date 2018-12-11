@@ -42,11 +42,11 @@ export default class SptLogin extends React.Component <{}, { username: string, p
     }
 
     public login(form: HTMLFormElement) {
-        const requestUrl = '/login';
+        const requestUrl = 'http://localhost:8080/login';
         const data = new FormData(form);
         this.restClient.post(requestUrl, data,
             (response) => {
-                window.location.replace('http://localhost:3000/good');
+                global.console.log(response);
             },
             (error) => this.setState({error: true}));
     }
