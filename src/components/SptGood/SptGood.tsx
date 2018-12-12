@@ -3,9 +3,10 @@ import './SptGood.css';
 import {ISptStore} from '../../models/SptStore';
 import {ISptGoodService, SptGoodService} from '../../services/SptGoodService';
 import SptCard from '../SptCard/SptCard';
-import {Row} from 'reactstrap';
+import {CardGroup} from 'reactstrap';
+import {observer} from 'mobx-react';
 
-
+@observer
 export default class SptGood extends React.Component <{ sptStore: ISptStore }, {modal: boolean}> {
 
     private sptGoodService: ISptGoodService = new SptGoodService(this.props.sptStore);
@@ -28,10 +29,10 @@ export default class SptGood extends React.Component <{ sptStore: ISptStore }, {
                 <div>
                     {beforeRender()}
                 </div>
-                <Row>
+                <CardGroup>
                 {this.props.sptStore.sptGoodStore.goods.map((good, idx) => <SptCard key={idx} goodName={good.goodName}
                                                                                    description={good.description} imageUrl={good.imageUrl}/>)}
-                </Row>
+                </CardGroup>
             </div>
         );
     }
