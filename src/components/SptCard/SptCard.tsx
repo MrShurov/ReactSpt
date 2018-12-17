@@ -16,17 +16,19 @@ import {
 import CardTitle from 'reactstrap/lib/CardTitle';
 import CardText from 'reactstrap/lib/CardText';
 import {ISptCalculationService, SptCalculationService} from '../../services/SptCalculationService';
+import {ISptStore} from '../../models/SptStore';
+import {observer} from 'mobx-react';
 
+@observer
+export default class SptCard extends React.Component <{ sptStore: ISptStore, goodName: string, imageUrl: string, description: string, calculationUrl: string },
+    { modal: boolean }> {
 
-export default class SptCard extends React.Component <{ goodName: string, imageUrl: string, description: string }, { modal: boolean, price: number}> {
+    private sptCalculationService: ISptCalculationService = new SptCalculationService(this.props.sptStore);
 
-    private sptCalculationService: ISptCalculationService = new SptCalculationService();
-
-    constructor(props: Readonly<{ modal: boolean, goodName: string, imageUrl: string, description: string }>) {
+    constructor(props: Readonly<{ sptStore: ISptStore, modal: boolean, goodName: string, imageUrl: string, description: string, calculationUrl: string }>) {
         super(props);
         this.state = {
             modal: false,
-            price: 0
         };
         this.toggle = this.toggle.bind(this);
     }
@@ -39,12 +41,13 @@ export default class SptCard extends React.Component <{ goodName: string, imageU
         this.setState({
             modal: !this.state.modal
         });
+        this.props.sptStore.sptCalculationStore.setPrice(0);
     }
 
     public handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        this.sptCalculationService.calculate(data, this.props.goodName);
+        this.sptCalculationService.calculate(data, this.props.calculationUrl);
     };
 
     public render() {
@@ -112,7 +115,11 @@ export default class SptCard extends React.Component <{ goodName: string, imageU
                                     </div>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="secondary" onClick={this.toggle}>Закрыть</Button>
+                                    {this.props.sptStore.sptCalculationStore.price !== 0
+                                        ? <div>Стоимость: {this.props.sptStore.sptCalculationStore.price}</div>
+                                        : ''
+                                    }
+                                    {global.console.log(this.props.sptStore.sptCalculationStore.price)}
                                 </ModalFooter>
                             </Modal>
                         </div>

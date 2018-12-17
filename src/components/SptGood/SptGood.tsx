@@ -7,15 +7,12 @@ import {CardGroup} from 'reactstrap';
 import {observer} from 'mobx-react';
 
 @observer
-export default class SptGood extends React.Component <{ sptStore: ISptStore }, {modal: boolean}> {
+export default class SptGood extends React.Component <{ sptStore: ISptStore }> {
 
     private sptGoodService: ISptGoodService = new SptGoodService(this.props.sptStore);
 
     constructor(props: Readonly<{sptStore: ISptStore}>) {
         super(props);
-        this.state = {
-            modal: false,
-        };
     }
 
     public render() {
@@ -30,8 +27,9 @@ export default class SptGood extends React.Component <{ sptStore: ISptStore }, {
                     {beforeRender()}
                 </div>
                 <CardGroup>
-                {this.props.sptStore.sptGoodStore.goods.map((good, idx) => <SptCard key={idx} goodName={good.goodName}
-                                                                                   description={good.description} imageUrl={good.imageUrl}/>)}
+                {this.props.sptStore.sptGoodStore.goods.map((good, idx) => <SptCard sptStore={this.props.sptStore} key={idx} goodName={good.goodName}
+                                                                                   description={good.description} imageUrl={good.imageUrl}
+                                                                                    calculationUrl={good.calculationUrl}/>)}
                 </CardGroup>
             </div>
         );

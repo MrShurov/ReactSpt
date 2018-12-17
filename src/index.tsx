@@ -13,11 +13,14 @@ const sptStore: ISptStore = SptStore.create({
     current: {
         mode: 'login'
     },
+    sptCalculationStore:{
+        price: 0
+    },
     sptGoodStore: {
         good: []
     },
     sptUserStore:{
-
+        user: []
     }
 });
 

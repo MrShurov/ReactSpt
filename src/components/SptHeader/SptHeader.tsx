@@ -12,7 +12,6 @@ export default class SptHeader extends React.Component <{ sptStore: ISptStore }>
                 <div className="nav-link" key={item}
                      onClick={() => {
                          this.props.sptStore.current.setMode(item);
-                         global.console.log(this.props.sptStore.current.mode.toString());
                      }}>
                     {item}
                 </div>);

@@ -1,6 +1,7 @@
 import {Instance, types} from 'mobx-state-tree';
 
 export const Good = types.model({
+    calculationUrl: types.string,
     description: types.string,
     goodName: types.string,
     imageUrl: types.string

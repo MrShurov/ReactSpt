@@ -8,12 +8,12 @@ import {
     Label,
     Modal,
     ModalBody,
-    ModalFooter,
     ModalHeader,
     Table
 } from 'reactstrap';
 import {ISptStore} from '../../models/SptStore';
-import RestClient from '../../services/RestClient';
+import {ISptUserService, SptUserService} from '../../services/SptUserService';
+import {observer} from 'mobx-react';
 
 const Line = (parameters: {usermane: string, userId: number}) => {
     const username = parameters.usermane;
@@ -27,13 +27,13 @@ const Line = (parameters: {usermane: string, userId: number}) => {
     );
 };
 
+@observer
 export default class SptUser extends React.Component <{ sptStore: ISptStore }, { modal: boolean, username: string, password: string, role: string}> {
 
-    private restClient: RestClient;
+    private sptUserService: ISptUserService = new SptUserService(this.props.sptStore);
 
     constructor(props: Readonly<{sptStore: ISptStore}>) {
         super(props);
-        this.restClient = new RestClient();
         this.state = {
             modal: false,
             password: '',
@@ -61,16 +61,8 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
 
     public handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
-        this.createUser(event.currentTarget);
+        this.sptUserService.createUser(event.currentTarget);
     };
-
-    public createUser(form: HTMLFormElement) {
-        const requestUrl = '/user';
-        const data = new FormData(form);
-        this.restClient.post(requestUrl, data,
-            (response) => response,
-            (error) => error);
-    }
 
     public handleOpen = () => this.setState({ modal: true });
 
@@ -83,10 +75,13 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
     }
 
     public render() {
-        this.props.sptStore.sptUserStore.add(1,'Shurov','123','q','q','q','q','q','q','q');
-        this.props.sptStore.sptUserStore.add(1,'Test','123','q','q','q','q','q','q','q');
-
+        const beforeRender = (() => {
+            this.sptUserService.getUsers();
+            return this.props.children;
+        });
         return (
+            <div>
+            <div>{beforeRender()}</div>
             <div>
                 <Table>
                     <thead>
@@ -141,17 +136,14 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
                                         disabled={!this.validateForm()}
                                         type="submit"
                                     >
-                                        Login
+                                        Создать
                                     </Button>
                                 </form>
                             </Col>
                         </div>
                     </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Создать</Button>{' '}
-                        <Button color="secondary" onClick={this.toggle}>Закрыть</Button>
-                    </ModalFooter>
                 </Modal>
+            </div>
             </div>
         );
     }

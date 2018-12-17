@@ -1,6 +1,6 @@
 import {Instance, types} from 'mobx-state-tree';
 
-const User = types.model({
+export const User = types.model({
     bankRequisites: types.string,
     companyName: types.string,
     password: types.string,
@@ -13,33 +13,17 @@ const User = types.model({
     username: types.string
 });
 
+export type User = Instance<typeof User>;
+
 export const SptUserStore = types
     .model('SptUserStore', {
         users: types.optional(types.array(User),[]),
     })
     .actions(self => ({
-        add(userid: number,
-            username: string,
-            password: string,
-            companyName: string,
-            postCode: string,
-            paymentAccount: string,
-            bankRequisites: string,
-            unp: string,
-            tel: string,
-            roles: string) {
-            const foundItem = self.users.find(i => i.username === username);
+        add(user : User) {
+            const foundItem = self.users.find(i => i.username === user.username);
             if (!foundItem) {
-                self.users.push({bankRequisites,
-                    companyName,
-                    password,
-                    paymentAccount,
-                    postCode,
-                    roles,
-                    tel,
-                    unp,
-                    userid,
-                    username});
+                self.users.push(user);
             }
         }
     }));
