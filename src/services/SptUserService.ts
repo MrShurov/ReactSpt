@@ -6,7 +6,7 @@ import {SptParserService} from './SptParserService';
 
 export interface ISptUserService {
     getUsers: () => void;
-    createUser: (form: HTMLFormElement) => void;
+    createUser: (data: FormData) => void;
 }
 
 export class SptUserService implements ISptUserService {
@@ -30,10 +30,11 @@ export class SptUserService implements ISptUserService {
             (error) => error);
     }
 
-    public createUser(form: HTMLFormElement) {
-        const requestUrl = 'http://localhost:8080/user/';
-        const data = new FormData(form);
-        this.restClient.post(requestUrl, data,
+    public createUser(data: FormData) {
+        const requestUrl = 'http://localhost:8080/user';
+        //const requestUrl = 'user';
+        //const requestUrl = 'calculate/BathWelded';
+        return this.restClient.post(requestUrl, data,
             (response) => {
                 this.getUsers();
             },

@@ -37,13 +37,13 @@ export default class RestClient {
         return this.axiosRest
             .post(path, data)
             .then((result: AxiosResponse) => {
-                //global.console.log(`POST ${path}`);
-                //global.console.log(`result: ${JSON.stringify(result)}`);
+                global.console.log(`POST ${path}`);
+                global.console.log(`result: ${JSON.stringify(result)}`);
                 successed(result);
             })
             .catch((error: AxiosError) => {
-                //global.console.log(`ERROR! POST ${path}`);
-                //global.console.log(`error: ${JSON.stringify(error)}`);
+                global.console.log(`ERROR! POST ${path}`);
+                global.console.log(`error: ${JSON.stringify(error)}`);
                 errored(error);
             });
     }

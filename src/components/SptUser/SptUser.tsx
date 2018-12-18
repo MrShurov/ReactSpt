@@ -61,7 +61,8 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
 
     public handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
-        this.sptUserService.createUser(event.currentTarget);
+        const data = new FormData(event.currentTarget);
+        this.sptUserService.createUser(data);
     };
 
     public handleOpen = () => this.setState({ modal: true });
