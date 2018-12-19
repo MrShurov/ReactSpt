@@ -7,7 +7,6 @@ import {
     Col,
     FormGroup,
     Input,
-    Label,
     Modal,
     ModalBody,
     ModalFooter,
@@ -71,40 +70,39 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                                         <Col>
                                             <form onSubmit={this.handleSubmit}>
                                                 <FormGroup>
-                                                    <Label for="count" sm={10}>Количество:</Label>
                                                     <Col>
-                                                        <Input autoFocus name="count" id="count"/>
+                                                        <Input placeholder="Количество" autoFocus name="count" id="count"/>
                                                     </Col>
                                                 </FormGroup>
                                                 <FormGroup>
-                                                    <Label for="depth" sm={10}>Глубина:</Label>
                                                     <Col>
-                                                        <Input name="depth" id="depth"/>
+                                                        <Input placeholder="Глубина" name="depth" id="depth"/>
                                                     </Col>
                                                 </FormGroup>
                                                 <FormGroup>
-                                                    <Label for="height" sm={10}>Высота:</Label>
                                                     <Col>
-                                                        <Input name="height" id="height"/>
+                                                        <Input placeholder="Высота" name="height" id="height"/>
                                                     </Col>
                                                 </FormGroup>
                                                 <FormGroup>
-                                                    <Label for="length" sm={10}>Длинна:</Label>
                                                     <Col>
-                                                        <Input name="length" id="length"
+                                                        <Input placeholder="Длинна" name="length" id="length"
                                                         />
                                                     </Col>
                                                 </FormGroup>
                                                 <FormGroup>
-                                                    <Label for="width" sm={10}>Ширина:</Label>
                                                     <Col>
-                                                        <Input name="width" id="width"/>
+                                                        <Input placeholder="Ширина" name="width" id="width"/>
                                                     </Col>
                                                 </FormGroup>
                                                 <FormGroup>
-                                                    <Label for="type" sm={10}>Тип метала:</Label>
                                                     <Col>
-                                                        <Input name="type" id="type"/>
+                                                        <select name="type" id="type" className="custom-select">
+                                                            <option value="">Тип металла:</option>
+                                                            <option value="полимер">Полимер</option>
+                                                            <option value="нерж">Нерж</option>
+                                                            <option value="оцинк">Оцинк</option>
+                                                        </select>
                                                     </Col>
                                                 </FormGroup>
                                                 <div className="text-center">
@@ -114,13 +112,12 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                                         </Col>
                                     </div>
                                 </ModalBody>
-                                <ModalFooter>
                                     {this.props.sptStore.sptCalculationStore.price !== 0
-                                        ? <div>Стоимость: {this.props.sptStore.sptCalculationStore.price}</div>
+                                        ? <ModalFooter className="justify-content-between">
+                                            <div className="calculationFooter">Стоимость: {this.props.sptStore.sptCalculationStore.price}</div>
+                                    </ModalFooter>
                                         : ''
                                     }
-                                    {global.console.log(this.props.sptStore.sptCalculationStore.price)}
-                                </ModalFooter>
                             </Modal>
                         </div>
                     </CardBody>

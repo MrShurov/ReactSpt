@@ -12,17 +12,20 @@ export default class SptBody extends React.Component <{ sptStore: ISptStore }> {
     public render() {
         return (
             <div className="wrapper">
-                {this.props.sptStore.current.mode === 'user'
+                {this.props.sptStore.current.mode === 'Пользователи'
                     ? <SptUser sptStore={this.props.sptStore}/>
                     : ''
                 }
-                {this.props.sptStore.current.mode === 'login'
+                {this.props.sptStore.current.mode === 'Вход'
                     ? <SptLogin/>
                     : ''
                 }
-                {this.props.sptStore.current.mode === 'goods'
+                {this.props.sptStore.current.mode === 'Оборудование'
                     ? <SptGood sptStore={this.props.sptStore}/>
                     : ''
+                }
+                {
+
                 }
             </div>
         );

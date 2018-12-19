@@ -2,19 +2,15 @@ import * as React from 'react';
 import './SptHeader.css';
 import {BrowserMode} from '../../models/SptCurrentStore';
 import {ISptStore} from '../../models/SptStore';
+import SptHeaderElement from '../SptHeaderElement';
 
 export default class SptHeader extends React.Component <{ sptStore: ISptStore }> {
     public render() {
-        const buttons: BrowserMode[] = ['login', 'user', 'goods'];
+        const buttons: BrowserMode[] = ['Вход', 'Пользователи', 'Оборудование'];
 
         const buttonsRender = buttons.map((item) => {
             return (
-                <div className="nav-link" key={item}
-                     onClick={() => {
-                         this.props.sptStore.current.setMode(item);
-                     }}>
-                    {item}
-                </div>);
+                <SptHeaderElement key={item} sptStore={this.props.sptStore} item={item}/> );
         });
 
         return (
@@ -25,8 +21,10 @@ export default class SptHeader extends React.Component <{ sptStore: ISptStore }>
                             data-target="#collapsibleNavbar">
                         <span className="navbar-toggler-icon"/>
                     </button>
-                    <div className="collapse navbar-collapse" id="collapsibleNavbar">
-                        {buttonsRender}
+                    <div id="menu">
+                        <ul className="d-flex flex-row align-items-center">
+                            {buttonsRender}
+                        </ul>
                     </div>
                 </nav>
             </div>

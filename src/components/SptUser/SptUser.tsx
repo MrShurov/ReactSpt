@@ -5,7 +5,6 @@ import {
     Col,
     FormGroup,
     Input,
-    Label,
     Modal,
     ModalBody,
     ModalHeader,
@@ -100,13 +99,13 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>Создать пользователя</ModalHeader>
                     <ModalBody>
-                        <div className="Login">
+                        <div className="registration">
                             <Col>
                                 <form onSubmit={this.handleSubmit}>
                                     <FormGroup>
-                                        <Label for="username" sm={10}>Username:</Label>
                                         <Col>
                                             <Input
+                                                placeholder="Имя пользователя"
                                                 autoFocus
                                                 name="username"
                                                 id="username"
@@ -116,9 +115,9 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
                                         </Col>
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label for="password" sm={2}>Password:</Label>
                                         <Col>
                                             <Input
+                                                placeholder="Пароль"
                                                 name="password"
                                                 id="password"
                                                 onChange={this.handleChangePassword}
@@ -128,12 +127,16 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
                                         </Col>
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label for="role" sm={2}>Role:</Label>
                                         <Col>
-                                            <Input/>
+                                            <select name="role" id="role" className="custom-select">
+                                                <option value="">Роль:</option>
+                                                <option value="ADMIN">Администратор</option>
+                                                <option value="USER">Пользователь</option>
+                                            </select>
                                         </Col>
                                     </FormGroup>
                                     <Button
+                                        className=""
                                         disabled={!this.validateForm()}
                                         type="submit"
                                     >

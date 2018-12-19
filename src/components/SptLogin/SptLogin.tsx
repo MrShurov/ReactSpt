@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './SptLogin.css';
-import {Button, Col, FormGroup, Input, Label} from 'reactstrap';
+import {Button, Col, FormGroup, Input} from 'reactstrap';
 import RestClient from '../../services/RestClient';
 
 export default class SptLogin extends React.Component <{}, { username: string, password: string, error: boolean }> {
@@ -57,9 +57,9 @@ export default class SptLogin extends React.Component <{}, { username: string, p
                 <Col className="login" md={3}>
                     <form onSubmit={this.handleSubmit}>
                         <FormGroup>
-                            <Label for="username" sm={15}>Username:</Label>
                             <Col sm={15}>
                                 <Input
+                                    placeholder="Имя пользователя"
                                     autoFocus
                                     name="username"
                                     id="username"
@@ -69,9 +69,9 @@ export default class SptLogin extends React.Component <{}, { username: string, p
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="password" sm={15}>Password:</Label>
                             <Col sm={15}>
                                 <Input
+                                    placeholder="Пароль"
                                     name="password"
                                     id="password"
                                     onChange={this.handleChangePassword}
@@ -82,13 +82,7 @@ export default class SptLogin extends React.Component <{}, { username: string, p
                         </FormGroup>
                         {this.errorHandler()}
                         <div className="text-center">
-                        <Button
-
-                            disabled={!this.validateForm()}
-                            type="submit"
-                        >
-                            Login
-                        </Button>
+                        <Button disabled={!this.validateForm()} type="submit">Войти</Button>
                         </div>
                     </form>
                 </Col>
