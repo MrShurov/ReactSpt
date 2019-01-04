@@ -16,7 +16,7 @@ export class SptUserService implements ISptUserService {
     private sptParserService: SptParserService;
 
     constructor(sptStore: ISptStore) {
-        this.restClient = new RestClient();
+        this.restClient = new RestClient(sptStore.current.currentUser);
         this.sptStore = sptStore;
         this.sptParserService = new SptParserService();
     }
@@ -52,6 +52,7 @@ export class SptUserService implements ISptUserService {
         const unp: string = 'unp';
         const tel: string = 'tel';
         const roles: string = 'roles';
+        const uuid: string = 'uuid';
         JSON.stringify(response.data, (key, value) => {
             this.sptParserService.parseArrayOrValue(value, (item: object) => {
                 this.sptStore.sptUserStore.add(User.create({
@@ -64,7 +65,8 @@ export class SptUserService implements ISptUserService {
                     tel: item[tel],
                     unp: item[unp],
                     userid: item[userid],
-                    username: item[username]
+                    username: item[username],
+                    uuid: item[uuid]
                 }));
             });
             return value;

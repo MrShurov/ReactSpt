@@ -15,7 +15,7 @@ export class SptGoodService implements ISptGoodService {
     private sptParserService: SptParserService;
 
     constructor(sptStore: ISptStore) {
-        this.restClient = new RestClient();
+        this.restClient = new RestClient(sptStore.current.currentUser);
         this.sptStore = sptStore;
         this.sptParserService = new SptParserService();
     }

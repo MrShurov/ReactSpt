@@ -4,10 +4,14 @@ export type BrowserMode = 'Вход' | 'Пользователи' | 'Обору�
 
 export const SptCurrentStore = types
     .model('SptCurrentStore', {
+        currentUser: types.string,
         mode: types.enumeration('mode', ['Вход', 'Пользователи', 'Оборудование'])
     })
     .actions(self => ({
         setMode(mode: BrowserMode) {
             self.mode = mode;
+        },
+        setCurrentUser(currentUser: string){
+            self.currentUser = currentUser;
         }
     }));

@@ -2,14 +2,19 @@ import * as React from 'react';
 import './SptLogin.css';
 import {Button, Col, FormGroup, Input} from 'reactstrap';
 import RestClient from '../../services/RestClient';
+import {SptParserService} from '../../services/SptParserService';
+import {AxiosResponse} from 'axios';
+import {ISptStore} from '../../models/SptStore';
 
-export default class SptLogin extends React.Component <{}, { username: string, password: string, error: boolean }> {
+export default class SptLogin extends React.Component <{sptStore: ISptStore}, { username: string, password: string, error: boolean }> {
 
     private restClient: RestClient;
+    private sptParserService: SptParserService;
 
-    constructor(props: Readonly<{}>) {
+    constructor(props: Readonly<{sptStore: ISptStore}>) {
         super(props);
-        this.restClient = new RestClient();
+        this.restClient = new RestClient(this.props.sptStore.current.currentUser);
+        this.sptParserService = new SptParserService();
         this.state = {
             error: false,
             password: '',
@@ -42,11 +47,11 @@ export default class SptLogin extends React.Component <{}, { username: string, p
     }
 
     public login(form: HTMLFormElement) {
-        const requestUrl = 'http://localhost:8080/login';
+        const requestUrl = '/authentication';
         const data = new FormData(form);
         this.restClient.post(requestUrl, data,
             (response) => {
-                global.console.log(response);
+                this.parseData(response, this.props.sptStore);
             },
             (error) => this.setState({error: true}));
     }
@@ -88,5 +93,15 @@ export default class SptLogin extends React.Component <{}, { username: string, p
                 </Col>
             </div>
         );
+    }
+
+    private parseData(response: AxiosResponse, sptStore: ISptStore) {
+        const uuid: string = 'uuid';
+        JSON.stringify(response.data, (key, value) => {
+            this.sptParserService.parseArrayOrValue(value, (item: object) => {
+                sptStore.current.setCurrentUser(item[uuid]);
+            });
+            return value;
+        });
     }
 }

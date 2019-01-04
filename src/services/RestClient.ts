@@ -3,9 +3,12 @@ import axios, {AxiosInstance, AxiosResponse, AxiosError} from 'axios';
 export default class RestClient {
     private axiosRest: AxiosInstance;
 
-    constructor() {
+    constructor(uuid : string) {
         this.axiosRest = axios.create({
-            timeout: 2000
+            headers: {
+                'UUID': uuid,
+            },
+            timeout: 2000,
         });
     }
 

@@ -17,7 +17,7 @@ export default class SptBody extends React.Component <{ sptStore: ISptStore }> {
                     : ''
                 }
                 {this.props.sptStore.current.mode === 'Вход'
-                    ? <SptLogin/>
+                    ? <SptLogin sptStore={this.props.sptStore}/>
                     : ''
                 }
                 {this.props.sptStore.current.mode === 'Оборудование'

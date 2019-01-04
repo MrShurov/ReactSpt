@@ -10,7 +10,8 @@ export const User = types.model({
     tel: types.string,
     unp: types.string,
     userid: types.number,
-    username: types.string
+    username: types.string,
+    uuid: types.string
 });
 
 export type User = Instance<typeof User>;
