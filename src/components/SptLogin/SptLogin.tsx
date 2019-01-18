@@ -5,7 +5,9 @@ import RestClient from '../../services/RestClient';
 import {SptParserService} from '../../services/SptParserService';
 import {AxiosResponse} from 'axios';
 import {ISptStore} from '../../models/SptStore';
+import {observer} from 'mobx-react';
 
+@observer
 export default class SptLogin extends React.Component <{sptStore: ISptStore}, { username: string, password: string, error: boolean }> {
 
     private restClient: RestClient;
@@ -101,7 +103,12 @@ export default class SptLogin extends React.Component <{sptStore: ISptStore}, { 
             this.sptParserService.parseArrayOrValue(value, (item: object) => {
                 sptStore.current.setCurrentUser(item[uuid]);
             });
-            return value;
         });
+        this.afterLogin();
+    }
+
+    private afterLogin(){
+        global.console.log(this.props.sptStore.current.currentUser);
+        this.props.sptStore.current.setMode('Оборудование');
     }
 }

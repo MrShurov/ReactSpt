@@ -29,7 +29,7 @@ export default class SptGood extends React.Component <{ sptStore: ISptStore }> {
                 <CardGroup>
                 {this.props.sptStore.sptGoodStore.goods.map((good, idx) => <SptCard sptStore={this.props.sptStore} key={idx} goodName={good.goodName}
                                                                                    description={good.description} imageUrl={good.imageUrl}
-                                                                                    calculationUrl={good.calculationUrl}/>)}
+                                                                                    calculationUrl={good.calculationUrl} type={good.type}/>)}
                 </CardGroup>
             </div>
         );

@@ -4,7 +4,8 @@ export const Good = types.model({
     calculationUrl: types.string,
     description: types.string,
     goodName: types.string,
-    imageUrl: types.string
+    imageUrl: types.string,
+    type: types.string
 });
 
 export type Good = Instance<typeof Good>;

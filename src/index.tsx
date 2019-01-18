@@ -18,10 +18,10 @@ const sptStore: ISptStore = SptStore.create({
         price: 0
     },
     sptGoodStore: {
-        good: []
+        goods : []
     },
     sptUserStore:{
-        user: []
+        users : []
     }
 });
 

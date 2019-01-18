@@ -34,10 +34,11 @@ export class SptGoodService implements ISptGoodService {
         const description : string = 'description';
         const imageUrl : string = 'imageUrl';
         const calculationUrl : string = 'calculationUrl';
+        const type : string = 'type';
         JSON.stringify(response.data, (key, value) => {
             this.sptParserService.parseArrayOrValue(value, (item: object) => {
                 this.sptStore.sptGoodStore.add(Good.create({calculationUrl: item[calculationUrl], description : item[description],goodName : item[goodName],
-                    imageUrl : item[imageUrl]}));
+                    imageUrl : item[imageUrl], type : item[type]}));
             });
             return value;
         });

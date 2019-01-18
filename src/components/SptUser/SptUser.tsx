@@ -62,6 +62,7 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         this.sptUserService.createUser(data);
+        this.sptUserService.getUsers();
     };
 
     public handleOpen = () => this.setState({ modal: true });

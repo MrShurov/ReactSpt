@@ -24,9 +24,6 @@ export default class SptBody extends React.Component <{ sptStore: ISptStore }> {
                     ? <SptGood sptStore={this.props.sptStore}/>
                     : ''
                 }
-                {
-
-                }
             </div>
         );
     }

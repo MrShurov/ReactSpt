@@ -31,9 +31,7 @@ export class SptUserService implements ISptUserService {
     }
 
     public createUser(data: FormData) {
-        const requestUrl = 'http://localhost:8080/user';
-        //const requestUrl = 'user';
-        //const requestUrl = 'calculate/BathWelded';
+        const requestUrl = '/user';
         return this.restClient.post(requestUrl, data,
             (response) => {
                 this.getUsers();
