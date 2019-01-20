@@ -99,16 +99,21 @@ export default class SptLogin extends React.Component <{sptStore: ISptStore}, { 
 
     private parseData(response: AxiosResponse, sptStore: ISptStore) {
         const uuid: string = 'uuid';
+        const roles: string = 'roles';
         JSON.stringify(response.data, (key, value) => {
             this.sptParserService.parseArrayOrValue(value, (item: object) => {
+                global.console.log(1);
                 sptStore.current.setCurrentUser(item[uuid]);
+                global.console.log(2);
+                sptStore.current.setRole(item[roles]);
+                global.console.log(3);
             });
         });
         this.afterLogin();
+        global.console.log(4);
     }
 
     private afterLogin(){
-        global.console.log(this.props.sptStore.current.currentUser);
         this.props.sptStore.current.setMode('Оборудование');
     }
 }

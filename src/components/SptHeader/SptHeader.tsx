@@ -3,14 +3,28 @@ import './SptHeader.css';
 import {BrowserMode} from '../../models/SptCurrentStore';
 import {ISptStore} from '../../models/SptStore';
 import SptHeaderElement from '../SptHeaderElement';
+import {observer} from 'mobx-react';
 
+@observer
 export default class SptHeader extends React.Component <{ sptStore: ISptStore }> {
     public render() {
-        const buttons: BrowserMode[] = ['Вход', 'Пользователи', 'Оборудование'];
+        const buttons: BrowserMode[] = ['Вход'];
+        const buttonsForAdmin: BrowserMode[] = ['Пользователи','Оборудование'];
+        const buttonsForUser: BrowserMode[] = ['Оборудование'];
 
         const buttonsRender = buttons.map((item) => {
             return (
-                <SptHeaderElement key={item} sptStore={this.props.sptStore} item={item}/> );
+                <SptHeaderElement key={item} sptStore={this.props.sptStore} item={item}/>);
+        });
+
+        const buttonsRenderForAdmin = buttonsForAdmin.map((item) => {
+            return (
+                <SptHeaderElement key={item} sptStore={this.props.sptStore} item={item}/>);
+        });
+
+        const buttonsRenderForUser = buttonsForUser.map((item) => {
+            return (
+                <SptHeaderElement key={item} sptStore={this.props.sptStore} item={item}/>);
         });
 
         return (
@@ -23,7 +37,18 @@ export default class SptHeader extends React.Component <{ sptStore: ISptStore }>
                     </button>
                     <div id="menu">
                         <ul className="d-flex flex-row align-items-center">
-                            {buttonsRender}
+                            {this.props.sptStore.current.role === 'Anonymous'
+                                ? buttonsRender
+                                : ''
+                            }
+                            {this.props.sptStore.current.role === 'ADMIN'
+                                ? buttonsRenderForAdmin
+                                : ''
+                            }
+                            {this.props.sptStore.current.role === 'USER'
+                                ? buttonsRenderForUser
+                                : ''
+                            }
                         </ul>
                     </div>
                 </nav>

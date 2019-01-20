@@ -12,7 +12,8 @@ import SptBody from './components/SptBody/SptBody';
 const sptStore: ISptStore = SptStore.create({
     current: {
         currentUser: '',
-        mode: 'Вход'
+        mode: 'Вход',
+        role: 'Anonymous'
     },
     sptCalculationStore:{
         price: 0
