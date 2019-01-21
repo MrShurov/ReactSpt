@@ -61,7 +61,7 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                             <form onSubmit={this.handleSubmit}>
                                 <FormGroup>
                                     <Col>
-                                        <Input placeholder="Количество" autoFocus name="count" id="count"/>
+                                        <Input placeholder="Количество ванн" autoFocus name="countOfItems" id="countOfItems"/>
                                     </Col>
                                 </FormGroup>
                                 <FormGroup>
@@ -95,6 +95,11 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                                         </select>
                                     </Col>
                                 </FormGroup>
+                                <FormGroup>
+                                    <Col>
+                                        <Input placeholder="Количество" name="count" id="count"/>
+                                    </Col>
+                                </FormGroup>
                                 <div className="text-center">
                                     <Button type="submit">Рассчитать</Button>
                                 </div>
@@ -119,7 +124,7 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                             <form onSubmit={this.handleSubmit}>
                                 <FormGroup>
                                     <Col>
-                                        <Input placeholder="Количество" autoFocus name="count" id="count"/>
+                                        <Input placeholder="Количество полок" autoFocus name="countOfItems" id="countOfItems"/>
                                     </Col>
                                 </FormGroup>
                                 <FormGroup>
@@ -151,6 +156,11 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                                 <FormGroup>
                                     <Col>
                                         <CustomInput type="checkbox" value="1" id="perforation" name="perforation" label="Перфорация"/>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Col>
+                                        <Input placeholder="Количество" name="count" id="count"/>
                                     </Col>
                                 </FormGroup>
                                 <div className="text-center">
@@ -205,6 +215,11 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                                         </select>
                                     </Col>
                                 </FormGroup>
+                                <FormGroup>
+                                    <Col>
+                                        <Input placeholder="Количество" name="count" id="count"/>
+                                    </Col>
+                                </FormGroup>
                                 <div className="text-center">
                                     <Button type="submit">Рассчитать</Button>
                                 </div>
@@ -252,6 +267,11 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                                             <option value="СПН с обвязкой">СПН с обвязкой</option>
                                             <option value="СПБН с обвязкой">СПБН с обвязкой</option>
                                         </select>
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Col>
+                                        <Input placeholder="Количество" name="count" id="count"/>
                                     </Col>
                                 </FormGroup>
                                 <div className="text-center">
