@@ -24,6 +24,10 @@ export default class SptBody extends React.Component <{ sptStore: ISptStore }> {
                     ? <SptGood sptStore={this.props.sptStore}/>
                     : ''
                 }
+                {this.props.sptStore.current.mode === 'Выход'
+                    ? <SptLogin sptStore={this.props.sptStore}/>
+                    : ''
+                }
             </div>
         );
     }

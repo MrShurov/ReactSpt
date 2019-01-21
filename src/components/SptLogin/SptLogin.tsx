@@ -58,9 +58,24 @@ export default class SptLogin extends React.Component <{sptStore: ISptStore}, { 
             (error) => this.setState({error: true}));
     }
 
+    public logout(){
+        if(this.props.sptStore.current.currentUser === 'Выход'){
+            this.props.sptStore.current.setCurrentUser('Anonymous');
+            this.props.sptStore.current.setMode('Вход');
+        }
+    }
+
     public render() {
+        const beforeRender = (() => {
+            {this.logout();}
+            return this.props.children;
+        });
+
         return (
             <div>
+                <div>
+                    {beforeRender()}
+                </div>
                 <Col className="login" md={3}>
                     <form onSubmit={this.handleSubmit}>
                         <FormGroup>
@@ -102,15 +117,11 @@ export default class SptLogin extends React.Component <{sptStore: ISptStore}, { 
         const roles: string = 'roles';
         JSON.stringify(response.data, (key, value) => {
             this.sptParserService.parseArrayOrValue(value, (item: object) => {
-                global.console.log(1);
                 sptStore.current.setCurrentUser(item[uuid]);
-                global.console.log(2);
                 sptStore.current.setRole(item[roles]);
-                global.console.log(3);
             });
         });
         this.afterLogin();
-        global.console.log(4);
     }
 
     private afterLogin(){

@@ -1,11 +1,11 @@
 import {types} from 'mobx-state-tree';
 
-export type BrowserMode = 'Вход' | 'Пользователи' | 'Оборудование';
+export type BrowserMode = 'Вход' | 'Пользователи' | 'Оборудование' | 'Выход';
 
 export const SptCurrentStore = types
     .model('SptCurrentStore', {
         currentUser: types.string,
-        mode: types.enumeration('mode', ['Вход', 'Пользователи', 'Оборудование']),
+        mode: types.enumeration('mode', ['Вход', 'Пользователи', 'Оборудование', 'Выход']),
         role: types.string
     })
     .actions(self => ({

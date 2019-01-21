@@ -11,7 +11,7 @@ import SptBody from './components/SptBody/SptBody';
 
 const sptStore: ISptStore = SptStore.create({
     current: {
-        currentUser: '',
+        currentUser: 'Anonymous',
         mode: 'Вход',
         role: 'Anonymous'
     },

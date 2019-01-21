@@ -7,7 +7,7 @@ import {BrowserMode} from '../../models/SptCurrentStore';
 
 export default class SptHeaderElement extends React.Component <{sptStore: ISptStore, item : BrowserMode}> {
 
-    constructor(props: Readonly<{sptStore: ISptStore, item : BrowserMode}>) {
+    constructor(props: Readonly<{sptStore: ISptStore, item : BrowserMode, className : string}>) {
         super(props);
     }
 

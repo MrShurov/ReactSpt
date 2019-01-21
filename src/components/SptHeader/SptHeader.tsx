@@ -8,8 +8,8 @@ import {observer} from 'mobx-react';
 @observer
 export default class SptHeader extends React.Component <{ sptStore: ISptStore }> {
     public render() {
-        const buttons: BrowserMode[] = ['Вход'];
-        const buttonsForAdmin: BrowserMode[] = ['Пользователи','Оборудование'];
+        const buttons: BrowserMode[] = ['Выход'];
+        const buttonsForAdmin: BrowserMode[] = ['Пользователи', 'Оборудование'];
         const buttonsForUser: BrowserMode[] = ['Оборудование'];
 
         const buttonsRender = buttons.map((item) => {
@@ -35,12 +35,8 @@ export default class SptHeader extends React.Component <{ sptStore: ISptStore }>
                             data-target="#collapsibleNavbar">
                         <span className="navbar-toggler-icon"/>
                     </button>
-                    <div id="menu">
-                        <ul className="d-flex flex-row align-items-center">
-                            {this.props.sptStore.current.role === 'Anonymous'
-                                ? buttonsRender
-                                : ''
-                            }
+                    <div id="menu" className="d-flex flex-row">
+                        <ul className="d-flex flex-row">
                             {this.props.sptStore.current.role === 'ADMIN'
                                 ? buttonsRenderForAdmin
                                 : ''
@@ -50,9 +46,14 @@ export default class SptHeader extends React.Component <{ sptStore: ISptStore }>
                                 : ''
                             }
                         </ul>
+                        <ul className="d-flex flex-row ml-auto">
+                            {this.props.sptStore.current.currentUser !== 'Anonymous'
+                                ? buttonsRender
+                                : ''}
+                        </ul>
                     </div>
                 </nav>
             </div>
-        );
+    );
     }
-}
+    }
