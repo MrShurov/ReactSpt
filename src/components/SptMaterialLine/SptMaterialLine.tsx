@@ -15,8 +15,7 @@ export default class SptMaterialLine extends React.Component <{sptStore: ISptSto
     constructor(props: Readonly<{sptStore: ISptStore, id: number, materialName: string, measure: string, price: number}>) {
         super(props);
         this.state = {
-            // @ts-ignore
-            price : null
+            price : 0
         };
     }
 

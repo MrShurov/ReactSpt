@@ -8,12 +8,12 @@ import {ISptStore} from '../../models/SptStore';
 import {observer} from 'mobx-react';
 
 @observer
-export default class SptLogin extends React.Component <{sptStore: ISptStore}, { username: string, password: string, error: boolean }> {
+export default class SptLogin extends React.Component <{ sptStore: ISptStore }, { username: string, password: string, error: boolean }> {
 
     private restClient: RestClient;
     private sptParserService: SptParserService;
 
-    constructor(props: Readonly<{sptStore: ISptStore}>) {
+    constructor(props: Readonly<{ sptStore: ISptStore }>) {
         super(props);
         this.restClient = new RestClient(this.props.sptStore.current.currentUser);
         this.sptParserService = new SptParserService();
@@ -58,16 +58,19 @@ export default class SptLogin extends React.Component <{sptStore: ISptStore}, { 
             (error) => this.setState({error: true}));
     }
 
-    public logout(){
-        if(this.props.sptStore.current.currentUser === 'Выход'){
+    public logout() {
+        if (this.props.sptStore.current.mode === 'Выход') {
             this.props.sptStore.current.setCurrentUser('Anonymous');
+            this.props.sptStore.current.setRole('');
             this.props.sptStore.current.setMode('Вход');
         }
     }
 
     public render() {
         const beforeRender = (() => {
-            {this.logout();}
+            {
+                this.logout();
+            }
             return this.props.children;
         });
 
@@ -104,7 +107,7 @@ export default class SptLogin extends React.Component <{sptStore: ISptStore}, { 
                         </FormGroup>
                         {this.errorHandler()}
                         <div className="text-center">
-                        <Button disabled={!this.validateForm()} type="submit">Войти</Button>
+                            <Button disabled={!this.validateForm()} type="submit">Войти</Button>
                         </div>
                     </form>
                 </Col>
@@ -124,7 +127,7 @@ export default class SptLogin extends React.Component <{sptStore: ISptStore}, { 
         this.afterLogin();
     }
 
-    private afterLogin(){
+    private afterLogin() {
         this.props.sptStore.current.setMode('Оборудование');
     }
 }
