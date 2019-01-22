@@ -21,6 +21,9 @@ const sptStore: ISptStore = SptStore.create({
     sptGoodStore: {
         goods : []
     },
+    sptMaterialStore: {
+        materials : []
+    },
     sptUserStore:{
         users : []
     }

@@ -9,7 +9,7 @@ import {observer} from 'mobx-react';
 export default class SptHeader extends React.Component <{ sptStore: ISptStore }> {
     public render() {
         const buttons: BrowserMode[] = ['Выход'];
-        const buttonsForAdmin: BrowserMode[] = ['Пользователи', 'Оборудование'];
+        const buttonsForAdmin: BrowserMode[] = ['Пользователи', 'Оборудование', 'Материалы', 'Работы'];
         const buttonsForUser: BrowserMode[] = ['Оборудование'];
 
         const buttonsRender = buttons.map((item) => {

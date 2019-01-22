@@ -5,6 +5,7 @@ import SptUser from '../SptUser/SptUser';
 import SptLogin from '../SptLogin/SptLogin';
 import SptGood from '../SptGood/SptGood';
 import {observer} from 'mobx-react';
+import SptMaterial from '../SptMaterial';
 
 @observer
 export default class SptBody extends React.Component <{ sptStore: ISptStore }> {
@@ -26,6 +27,14 @@ export default class SptBody extends React.Component <{ sptStore: ISptStore }> {
                 }
                 {this.props.sptStore.current.mode === 'Выход'
                     ? <SptLogin sptStore={this.props.sptStore}/>
+                    : ''
+                }
+                {this.props.sptStore.current.mode === 'Материалы'
+                    ? <SptMaterial sptStore={this.props.sptStore}/>
+                    : ''
+                }
+                {this.props.sptStore.current.mode === 'Работы'
+                    ? ''
                     : ''
                 }
             </div>
