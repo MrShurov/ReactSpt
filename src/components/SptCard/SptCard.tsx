@@ -54,7 +54,9 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
     public render() {
         const bath = (() => {
             return (<Modal isOpen={this.state.modal} toggle={this.toggle}>
-                <ModalHeader toggle={this.toggle}>Рассчитать стоимость</ModalHeader>
+                <ModalHeader toggle={this.toggle}>
+                    Рассчитать стоимость
+                </ModalHeader>
                 <ModalBody>
                     <div>
                         <Col>
@@ -109,7 +111,9 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                 </ModalBody>
                 {this.props.sptStore.sptCalculationStore.price !== 0
                     ? <ModalFooter className="justify-content-between">
-                        <div className="calculationFooter">Стоимость: {this.props.sptStore.sptCalculationStore.price}</div>
+                        <div className="calculationFooter">
+                            Стоимость: {this.props.sptStore.sptCalculationStore.price}
+                        </div>
                     </ModalFooter>
                     : ''
                 }
