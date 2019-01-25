@@ -17,22 +17,29 @@ import CardText from 'reactstrap/lib/CardText';
 import {ISptCalculationService, SptCalculationService} from '../../services/SptCalculationService';
 import {ISptStore} from '../../models/SptStore';
 import {observer} from 'mobx-react';
+import {ISptGoodService, SptGoodService} from '../../services/SptGoodService';
 
 @observer
 export default class SptCard extends React.Component <{ sptStore: ISptStore, goodName: string, imageUrl: string, description: string,
-    calculationUrl: string, type : string },
-    { modal: boolean }> {
+    calculationUrl: string, type : string, coefficient : number },
+    { modal: boolean, coefficient: number }> {
 
     private sptCalculationService: ISptCalculationService = new SptCalculationService(this.props.sptStore);
+    private sptGoodService: ISptGoodService = new SptGoodService(this.props.sptStore);
 
     constructor(props: Readonly<{ sptStore: ISptStore, modal: boolean, goodName: string, imageUrl: string, description: string,
-        calculationUrl: string, type : string }>) {
+        calculationUrl: string, type : string, coefficient : number }>) {
         super(props);
         this.state = {
-            modal: false,
+            coefficient: this.props.coefficient,
+            modal: false
         };
         this.toggle = this.toggle.bind(this);
     }
+
+    public handleChangeCoefficient = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({coefficient: parseFloat(event.target.value)});
+    };
 
     public handleOpen = () => this.setState({modal: true});
 
@@ -49,6 +56,10 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         this.sptCalculationService.calculate(data, this.props.calculationUrl);
+    };
+
+    public handleSubmitChangeCoefficient = () => {
+        this.sptGoodService.updateCoefficient(this.state.coefficient, this.props.goodName);
     };
 
     public render() {
@@ -306,6 +317,16 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                             <CardText>{this.props.description}</CardText>
                         </div>
                         <div className="text-center">
+                            <div className="d-flex flex-row">
+                            <Input
+                                className="col-4 text-center myInput"
+                                name="coefficient"
+                                id="coefficient"
+                                onChange={this.handleChangeCoefficient}
+                                value={this.state.coefficient}
+                            />
+                            <Button onClick={() => this.handleSubmitChangeCoefficient()} type="submit" color="success" >Обновить</Button>
+                            </div>
                             <Button onClick={this.toggle}>Рассчитать</Button>
                             {this.props.type === 'Ванны'
                                 ? bath()

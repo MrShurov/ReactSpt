@@ -11,7 +11,7 @@ export default class SptGood extends React.Component <{ sptStore: ISptStore }> {
 
     private sptGoodService: ISptGoodService = new SptGoodService(this.props.sptStore);
 
-    constructor(props: Readonly<{sptStore: ISptStore}>) {
+    constructor(props: Readonly<{ sptStore: ISptStore }>) {
         super(props);
     }
 
@@ -27,9 +27,14 @@ export default class SptGood extends React.Component <{ sptStore: ISptStore }> {
                     {beforeRender()}
                 </div>
                 <CardGroup>
-                {this.props.sptStore.sptGoodStore.goods.map((good, idx) => <SptCard sptStore={this.props.sptStore} key={idx} goodName={good.goodName}
-                                                                                   description={good.description} imageUrl={good.imageUrl}
-                                                                                    calculationUrl={good.calculationUrl} type={good.type}/>)}
+                    {this.props.sptStore.sptGoodStore.goods.map((good, idx) => <SptCard sptStore={this.props.sptStore}
+                                                                                        key={idx}
+                                                                                        goodName={good.goodName}
+                                                                                        description={good.description}
+                                                                                        imageUrl={good.imageUrl}
+                                                                                        calculationUrl={good.calculationUrl}
+                                                                                        type={good.type}
+                                                                                        coefficient={good.coefficient}/>)}
                 </CardGroup>
             </div>
         );

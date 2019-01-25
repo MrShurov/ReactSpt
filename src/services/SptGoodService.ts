@@ -6,6 +6,7 @@ import {SptParserService} from './SptParserService';
 
 export interface ISptGoodService {
     getGoods: () => void;
+    updateCoefficient: (coefficient : number, materialName: string) => void;
 }
 
 export class SptGoodService implements ISptGoodService {
@@ -29,17 +30,38 @@ export class SptGoodService implements ISptGoodService {
             (error) => error);
     }
 
+    public updateCoefficient(coefficient: number, goodName: string){
+        const requestUrl = '/goods/updateCoefficient?coefficient=' + coefficient + '&goodName=' + goodName;
+        this.restClient.put(requestUrl,
+            (response) => {
+                this.parseAndUpdateData(response,this.sptStore);
+            },
+            (error) => {global.console.log(error);});
+    }
+
     private parseData(response: AxiosResponse, sptStore: ISptStore) {
         const goodName : string = 'goodName';
         const description : string = 'description';
         const imageUrl : string = 'imageUrl';
         const calculationUrl : string = 'calculationUrl';
         const type : string = 'type';
+        const coefficient : string = 'coefficient';
         JSON.stringify(response.data, (key, value) => {
             this.sptParserService.parseArrayOrValue(value, (item: object) => {
                 this.sptStore.sptGoodStore.add(Good.create({calculationUrl: item[calculationUrl],
-                    description : item[description],goodName : item[goodName],
+                    coefficient : item[coefficient],description : item[description],goodName : item[goodName],
                     imageUrl : item[imageUrl], type : item[type]}));
+            });
+            return value;
+        });
+    }
+
+    private parseAndUpdateData(response: AxiosResponse, sptStore: ISptStore) {
+        const goodName : string = 'goodName';
+        const coefficient : string = 'coefficient';
+        JSON.stringify(response.data, (key, value) => {
+            this.sptParserService.parseArrayOrValue(value, (item: object) => {
+                this.sptStore.sptMaterialStore.update(item[goodName],item[coefficient]);
             });
             return value;
         });
