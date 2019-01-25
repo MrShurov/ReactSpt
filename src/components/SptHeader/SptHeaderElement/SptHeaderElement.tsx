@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './SptHeaderElement.css';
-import {ISptStore} from '../../models/SptStore';
-import {BrowserMode} from '../../models/SptCurrentStore';
+import {ISptStore} from '../../../models/SptStore';
+import {BrowserMode} from '../../../models/SptCurrentStore';
 
 
 

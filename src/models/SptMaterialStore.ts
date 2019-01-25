@@ -21,12 +21,8 @@ export const SptMaterialStore = types
             }
         },
         update(materialName : string, price : number){
-            const foundItem = self.materials.find(i => i.materialName === materialName);
-            if (foundItem) {
-                self.materials.remove(foundItem);
-                foundItem.price = price;
-                self.materials.push(foundItem);
-            }
+            // @ts-ignore
+            self.materials.find(i => i.materialName === materialName).price = price;
         }
     }));
 

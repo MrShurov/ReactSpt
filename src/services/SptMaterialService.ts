@@ -22,11 +22,8 @@ export class SptMaterialService implements ISptMaterialService {
     }
 
     public updateMaterial(price : number, materialName : string) {
-        const requestUrl = '/material';
-        const data = new FormData();
-        data.append('materialName',materialName);
-        data.append('price', price.toString());
-        this.restClient.put(requestUrl, data,
+        const requestUrl = '/material?materialName=' + materialName + '&price=' + price;
+        this.restClient.put(requestUrl,
             (response) => {
                 this.parseAndUpdateData(response,this.sptStore);
             },

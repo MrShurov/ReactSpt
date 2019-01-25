@@ -2,14 +2,14 @@ import * as React from 'react';
 import './SptHeader.css';
 import {BrowserMode} from '../../models/SptCurrentStore';
 import {ISptStore} from '../../models/SptStore';
-import SptHeaderElement from '../SptHeaderElement';
+import SptHeaderElement from './SptHeaderElement';
 import {observer} from 'mobx-react';
 
 @observer
 export default class SptHeader extends React.Component <{ sptStore: ISptStore }> {
     public render() {
         const buttons: BrowserMode[] = ['Выход'];
-        const buttonsForAdmin: BrowserMode[] = ['Пользователи', 'Оборудование', 'Материалы', 'Работы'];
+        const buttonsForAdmin: BrowserMode[] = ['Пользователи', 'Оборудование', 'Материалы'];
         const buttonsForUser: BrowserMode[] = ['Оборудование'];
 
         const buttonsRender = buttons.map((item) => {

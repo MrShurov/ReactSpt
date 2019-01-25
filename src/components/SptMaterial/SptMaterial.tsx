@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import {ISptStore} from '../../models/SptStore';
 import {ISptMaterialService, SptMaterialService} from '../../services/SptMaterialService';
 import {Table} from 'reactstrap';
-import SptMaterialLine from '../SptMaterialLine';
+import SptMaterialLine from './SptMaterialLine';
 
 @observer
 export default class SptMaterial extends React.Component <{ sptStore: ISptStore }> {
@@ -30,8 +30,10 @@ export default class SptMaterial extends React.Component <{ sptStore: ISptStore 
                         <tr>
                             <th>Id</th>
                             <th>materialName</th>
-                            <th>measure</th>
-                            <th>price</th>
+                            <th className="text-center">measure</th>
+                            <th className="text-center">price</th>
+                            <th/>
+                            <th/>
                         </tr>
                         </thead>
                         <tbody>

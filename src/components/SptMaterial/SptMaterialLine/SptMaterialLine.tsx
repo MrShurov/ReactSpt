@@ -1,9 +1,9 @@
 import * as React from 'react';
 import './SptMaterialLine.css';
-import {ISptStore} from '../../models/SptStore';
 import {Button, Input} from 'reactstrap';
-import {ISptMaterialService, SptMaterialService} from '../../services/SptMaterialService';
 import {observer} from 'mobx-react';
+import {ISptStore} from '../../../models/SptStore';
+import {ISptMaterialService, SptMaterialService} from '../../../services/SptMaterialService';
 
 
 @observer
@@ -32,10 +32,11 @@ export default class SptMaterialLine extends React.Component <{sptStore: ISptSto
                 <tr>
                     <th scope="row">{this.props.id}</th>
                     <td>{this.props.materialName}</td>
-                    <td>{this.props.measure}</td>
-                    <td>{this.props.price}</td>
-                    <td>
+                    <td align="center">{this.props.measure}</td>
+                    <td align="center">{this.props.price}</td>
+                    <td align="center">
                         <Input
+                            className="col-4 text-center myInput"
                             name="price"
                             id="price"
                             onChange={this.handleChangePrice}
@@ -43,7 +44,7 @@ export default class SptMaterialLine extends React.Component <{sptStore: ISptSto
                         />
                     </td>
                     <td>
-                        <Button onClick={() => this.handleSubmit()} type="submit" color="success" >success</Button>
+                        <Button onClick={() => this.handleSubmit()} type="submit" color="success" >Обновить</Button>
                     </td>
                 </tr>
         );

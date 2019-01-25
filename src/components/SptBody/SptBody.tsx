@@ -33,10 +33,6 @@ export default class SptBody extends React.Component <{ sptStore: ISptStore }> {
                     ? <SptMaterial sptStore={this.props.sptStore}/>
                     : ''
                 }
-                {this.props.sptStore.current.mode === 'Работы'
-                    ? ''
-                    : ''
-                }
             </div>
         );
     }
