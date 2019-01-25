@@ -43,7 +43,7 @@ export default class SptLogin extends React.Component <{ sptStore: ISptStore }, 
 
     public errorHandler() {
         if (this.state.error) {
-            return <div className="alert alert-danger">Invalid username or password</div>;
+            return <div className="alert alert-danger">Неверное имя пользователя или пароль</div>;
         }
         return this.props.children;
     }

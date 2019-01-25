@@ -28,10 +28,10 @@ export default class SptMaterial extends React.Component <{ sptStore: ISptStore 
                     <Table>
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>materialName</th>
-                            <th className="text-center">measure</th>
-                            <th className="text-center">price</th>
+                            <th>Номер</th>
+                            <th>Название материала</th>
+                            <th className="text-center">Единицы измерения</th>
+                            <th className="text-center">Цена</th>
                             <th/>
                             <th/>
                         </tr>

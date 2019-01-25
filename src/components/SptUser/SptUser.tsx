@@ -87,9 +87,9 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
                 <Table>
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Username</th>
-                        <th>Actions</th>
+                        <th>Номер</th>
+                        <th>Имя пользователя</th>
+                        <th>Действия</th>
                     </tr>
                     </thead>
                     <tbody>
