@@ -22,7 +22,7 @@ import {ISptGoodService, SptGoodService} from '../../services/SptGoodService';
 @observer
 export default class SptCard extends React.Component <{ sptStore: ISptStore, goodName: string, imageUrl: string, description: string,
     calculationUrl: string, type : string, coefficient : number },
-    { modal: boolean, coefficient: number }> {
+    { modal: boolean, coefficient: number, perforation: string }> {
 
     private sptCalculationService: ISptCalculationService = new SptCalculationService(this.props.sptStore);
     private sptGoodService: ISptGoodService = new SptGoodService(this.props.sptStore);
@@ -32,13 +32,22 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
         super(props);
         this.state = {
             coefficient: this.props.coefficient,
-            modal: false
+            modal: false,
+            perforation: 'No'
         };
         this.toggle = this.toggle.bind(this);
     }
 
     public handleChangeCoefficient = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({coefficient: parseFloat(event.target.value)});
+    };
+
+    public handlePerforation = () => {
+        if(this.state.perforation === 'No'){
+            this.setState({perforation : 'Yes'});
+        } else {
+            this.setState({perforation : 'No'});
+        }
     };
 
     public handleOpen = () => this.setState({modal: true});
@@ -55,6 +64,9 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
     public handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        if(this.props.type === 'Стеллажи' && this.state.perforation === 'No'){
+            data.append('perforation',this.state.perforation);
+        }
         this.sptCalculationService.calculate(data, this.props.calculationUrl);
     };
 
@@ -170,7 +182,8 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                                 </FormGroup>
                                 <FormGroup>
                                     <Col>
-                                        <CustomInput type="checkbox" value="1" id="perforation" name="perforation" label="Перфорация"/>
+                                        <CustomInput onClick={this.handlePerforation} type="checkbox" value={this.state.perforation}
+                                                     id="perforation" name="perforation" label="Перфорация"/>
                                     </Col>
                                 </FormGroup>
                                 <FormGroup>
