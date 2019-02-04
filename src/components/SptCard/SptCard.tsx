@@ -330,17 +330,19 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                             <CardText>{this.props.description}</CardText>
                         </div>
                         <div className="text-center">
-                            <div className="d-flex flex-row">
-                            <Input
-                                className="col-4 text-center myInput"
-                                name="coefficient"
-                                id="coefficient"
-                                onChange={this.handleChangeCoefficient}
-                                value={this.state.coefficient}
-                            />
-                            <Button onClick={() => this.handleSubmitChangeCoefficient()} type="submit" color="success" >Обновить</Button>
-                            </div>
-                            <Button onClick={this.toggle}>Рассчитать</Button>
+                            {this.props.sptStore.current.role === 'ADMIN'
+                            ? <div className="d-flex justify-content-center">
+                                    <Input
+                                        className="col-4 text-center myInput"
+                                        name="coefficient"
+                                        id="coefficient"
+                                        onChange={this.handleChangeCoefficient}
+                                        value={this.state.coefficient}
+                                    />
+                                    <Button onClick={() => this.handleSubmitChangeCoefficient()} type="submit" color="success" >Обновить</Button>
+                                </div>
+                            : ''}
+                            <Button className="resultBtn" onClick={this.toggle}>Рассчитать</Button>
                             {this.props.type === 'Ванны'
                                 ? bath()
                                 : ''
