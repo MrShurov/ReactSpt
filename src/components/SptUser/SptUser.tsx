@@ -21,7 +21,6 @@ const Line = (parameters: {usermane: string, userId: number}) => {
         <tr>
             <th scope="row">{id}</th>
             <td>{username}</td>
-            <td><Button color="info">Полная информация</Button></td>
         </tr>
     );
 };
@@ -89,7 +88,6 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
                     <tr>
                         <th>Номер</th>
                         <th>Имя пользователя</th>
-                        <th>Действия</th>
                     </tr>
                     </thead>
                     <tbody>
