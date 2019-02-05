@@ -1,34 +1,30 @@
 import * as React from 'react';
-import {
-    Button,
-    Card,
-    CardBody,
-    CardImg,
-    Col, CustomInput,
-    FormGroup,
-    Input,
-    Modal,
-    ModalBody,
-    ModalFooter,
-    ModalHeader
-} from 'reactstrap';
+import {Button, Card, CardBody, CardImg, Input,} from 'reactstrap';
 import CardTitle from 'reactstrap/lib/CardTitle';
 import CardText from 'reactstrap/lib/CardText';
 import {ISptCalculationService, SptCalculationService} from '../../services/SptCalculationService';
 import {ISptStore} from '../../models/SptStore';
 import {observer} from 'mobx-react';
 import {ISptGoodService, SptGoodService} from '../../services/SptGoodService';
+import Bath from './Cards/Bath';
+import Table from './Cards/Table';
+import Rack from './Cards/Rack';
+import TableWithStrapping from './Cards/TableWithStrapping';
 
 @observer
-export default class SptCard extends React.Component <{ sptStore: ISptStore, goodName: string, imageUrl: string, description: string,
-    calculationUrl: string, type : string, coefficient : number },
+export default class SptCard extends React.Component <{
+    sptStore: ISptStore, goodName: string, imageUrl: string, description: string,
+    calculationUrl: string, type: string, coefficient: number
+},
     { modal: boolean, coefficient: number, perforation: string }> {
 
     private sptCalculationService: ISptCalculationService = new SptCalculationService(this.props.sptStore);
     private sptGoodService: ISptGoodService = new SptGoodService(this.props.sptStore);
 
-    constructor(props: Readonly<{ sptStore: ISptStore, modal: boolean, goodName: string, imageUrl: string, description: string,
-        calculationUrl: string, type : string, coefficient : number }>) {
+    constructor(props: Readonly<{
+        sptStore: ISptStore, modal: boolean, goodName: string, imageUrl: string, description: string,
+        calculationUrl: string, type: string, coefficient: number
+    }>) {
         super(props);
         this.state = {
             coefficient: this.props.coefficient,
@@ -43,10 +39,10 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
     };
 
     public handlePerforation = () => {
-        if(this.state.perforation === 'No'){
-            this.setState({perforation : 'Yes'});
+        if (this.state.perforation === 'No') {
+            this.setState({perforation: 'Yes'});
         } else {
-            this.setState({perforation : 'No'});
+            this.setState({perforation: 'No'});
         }
     };
 
@@ -64,8 +60,8 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
     public handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        if(this.props.type === 'Стеллажи' && this.state.perforation === 'No'){
-            data.append('perforation',this.state.perforation);
+        if (this.props.type === 'Стеллажи' && this.state.perforation === 'No') {
+            data.append('perforation', this.state.perforation);
         }
         this.sptCalculationService.calculate(data, this.props.calculationUrl);
     };
@@ -75,249 +71,6 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
     };
 
     public render() {
-        const bath = (() => {
-            return (<Modal isOpen={this.state.modal} toggle={this.toggle}>
-                <ModalHeader toggle={this.toggle}>
-                    Рассчитать стоимость
-                </ModalHeader>
-                <ModalBody>
-                    <div>
-                        <Col>
-                            <form onSubmit={this.handleSubmit}>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Количество ванн" autoFocus name="countOfItems" id="countOfItems"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Глубина" name="depth" id="depth"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Высота" name="height" id="height"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Длинна" name="length" id="length"
-                                        />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Ширина" name="width" id="width"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <select name="type" id="type" className="custom-select">
-                                            <option value="">Тип металла:</option>
-                                            <option value="полимер">Полимер</option>
-                                            <option value="нерж">Нерж</option>
-                                            <option value="оцинк">Оцинк</option>
-                                        </select>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Количество" name="count" id="count"/>
-                                    </Col>
-                                </FormGroup>
-                                <div className="text-center">
-                                    <Button type="submit">Рассчитать</Button>
-                                </div>
-                            </form>
-                        </Col>
-                    </div>
-                </ModalBody>
-                {this.props.sptStore.sptCalculationStore.price !== 0
-                    ? <ModalFooter className="justify-content-between">
-                        <div className="calculationFooter">
-                            Стоимость: {this.props.sptStore.sptCalculationStore.price}
-                        </div>
-                    </ModalFooter>
-                    : ''
-                }
-            </Modal>);
-        });
-        const rack = (() => {
-            return (<Modal isOpen={this.state.modal} toggle={this.toggle}>
-                <ModalHeader toggle={this.toggle}>Рассчитать стоимость</ModalHeader>
-                <ModalBody>
-                    <div>
-                        <Col>
-                            <form onSubmit={this.handleSubmit}>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Количество полок" autoFocus name="countOfItems" id="countOfItems"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Высота" name="height" id="height"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Длинна" name="length" id="length"
-                                        />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Ширина" name="width" id="width"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <select name="type" id="type" className="custom-select">
-                                            <option value="">Тип металла:</option>
-                                            <option value="(полки - нерж, стойки - нерж)">(полки - нерж, стойки - нерж)</option>
-                                            <option value="(полки - нерж, стойки - оцинк)">(полки - нерж, стойки - оцинк)</option>
-                                            <option value="(полки - оцинк, стойки - оцинк)">(полки - оцинк, стойки - оцинк)</option>
-                                        </select>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <CustomInput onClick={this.handlePerforation} type="checkbox" value={this.state.perforation}
-                                                     id="perforation" name="perforation" label="Перфорация"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Количество" name="count" id="count"/>
-                                    </Col>
-                                </FormGroup>
-                                <div className="text-center">
-                                    <Button type="submit">Рассчитать</Button>
-                                </div>
-                            </form>
-                        </Col>
-                    </div>
-                </ModalBody>
-                {this.props.sptStore.sptCalculationStore.price !== 0
-                    ? <ModalFooter className="justify-content-between">
-                        <div className="calculationFooter">Стоимость: {this.props.sptStore.sptCalculationStore.price}</div>
-                    </ModalFooter>
-                    : ''
-                }
-            </Modal>);
-        });
-        const table = (() => {
-            return (<Modal isOpen={this.state.modal} toggle={this.toggle}>
-                <ModalHeader toggle={this.toggle}>Рассчитать стоимость</ModalHeader>
-                <ModalBody>
-                    <div>
-                        <Col>
-                            <form onSubmit={this.handleSubmit}>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Высота" name="height" id="height"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Длинна" name="length" id="length"
-                                        />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Ширина" name="width" id="width"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <select name="type" id="type" className="custom-select">
-                                            <option value="">Тип стола:</option>
-                                            <option value="СП с решётчатой полкой">СП с решётчатой полкой</option>
-                                            <option value="СПБ с решётчатой полкой">СПБ с решётчатой полкой</option>
-                                            <option value="СПБ со сплошной полкой">СПБ со сплошной полкой</option>
-                                            <option value="СПН с решётчатой полкой">СПН с решётчатой полкой</option>
-                                            <option value="СПБН с решётчатой полкой">СПБН с решётчатой полкой</option>
-                                            <option value="СПН со сплошной полкой">СПН со сплошной полкой</option>
-                                            <option value="СПБН со сплошной полкой">СПБН со сплошной полкой</option>
-                                        </select>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Количество" name="count" id="count"/>
-                                    </Col>
-                                </FormGroup>
-                                <div className="text-center">
-                                    <Button type="submit">Рассчитать</Button>
-                                </div>
-                            </form>
-                        </Col>
-                    </div>
-                </ModalBody>
-                {this.props.sptStore.sptCalculationStore.price !== 0
-                    ? <ModalFooter className="justify-content-between">
-                        <div className="calculationFooter">Стоимость: {this.props.sptStore.sptCalculationStore.price}</div>
-                    </ModalFooter>
-                    : ''
-                }
-            </Modal>);
-        });
-        const tableWithStrapping = (() => {
-            return (<Modal isOpen={this.state.modal} toggle={this.toggle}>
-                <ModalHeader toggle={this.toggle}>Рассчитать стоимость</ModalHeader>
-                <ModalBody>
-                    <div>
-                        <Col>
-                            <form onSubmit={this.handleSubmit}>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Высота" name="height" id="height"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Длинна" name="length" id="length"
-                                        />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Ширина" name="width" id="width"/>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <select name="type" id="type" className="custom-select">
-                                            <option value="">Тип стола:</option>
-                                            <option value="СП с обвязкой">СП с обвязкой</option>
-                                            <option value="СПБ с обвязкой">СПБ с обвязкой</option>
-                                            <option value="СПН с обвязкой">СПН с обвязкой</option>
-                                            <option value="СПБН с обвязкой">СПБН с обвязкой</option>
-                                        </select>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Col>
-                                        <Input placeholder="Количество" name="count" id="count"/>
-                                    </Col>
-                                </FormGroup>
-                                <div className="text-center">
-                                    <Button type="submit">Рассчитать</Button>
-                                </div>
-                            </form>
-                        </Col>
-                    </div>
-                </ModalBody>
-                {this.props.sptStore.sptCalculationStore.price !== 0
-                    ? <ModalFooter className="justify-content-between">
-                        <div className="calculationFooter">Стоимость: {this.props.sptStore.sptCalculationStore.price}</div>
-                    </ModalFooter>
-                    : ''
-                }
-            </Modal>);
-        });
-
         return (
             <div>
                 <Card>
@@ -331,7 +84,7 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                         </div>
                         <div className="text-center">
                             {this.props.sptStore.current.role === 'ADMIN'
-                            ? <div className="d-flex justify-content-center">
+                                ? <div className="d-flex justify-content-center">
                                     <Input
                                         className="col-4 text-center myInput"
                                         name="coefficient"
@@ -339,24 +92,25 @@ export default class SptCard extends React.Component <{ sptStore: ISptStore, goo
                                         onChange={this.handleChangeCoefficient}
                                         value={this.state.coefficient}
                                     />
-                                    <Button onClick={() => this.handleSubmitChangeCoefficient()} type="submit" color="success" >Обновить</Button>
+                                    <Button onClick={() => this.handleSubmitChangeCoefficient()} type="submit" color="success">Обновить</Button>
                                 </div>
-                            : ''}
+                                : ''}
                             <Button className="resultBtn" onClick={this.toggle}>Рассчитать</Button>
                             {this.props.type === 'Ванны'
-                                ? bath()
+                                ? <Bath calculationUrl={this.props.calculationUrl} sptStore={this.props.sptStore} goodName={this.props.goodName}
+                                        toggle={this.state.modal}/>
                                 : ''
                             }
                             {this.props.type === 'Столы'
-                                ? table()
+                                ? <Table calculationUrl={this.props.calculationUrl} sptStore={this.props.sptStore} goodName={this.props.goodName}/>
                                 : ''
                             }
                             {(this.props.type === 'Стеллажи')
-                                ? rack()
+                                ? <Rack calculationUrl={this.props.calculationUrl} sptStore={this.props.sptStore} goodName={this.props.goodName}/>
                                 : ''
                             }
                             {this.props.type === 'Столы c обвязкой'
-                                ? tableWithStrapping()
+                                ? <TableWithStrapping calculationUrl={this.props.calculationUrl} sptStore={this.props.sptStore} goodName={this.props.goodName}/>
                                 : ''
                             }
                         </div>
