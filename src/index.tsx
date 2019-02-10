@@ -7,6 +7,8 @@ import {BrowserRouter} from 'react-router-dom';
 import {ISptStore, SptStore} from './models/SptStore';
 import registerServiceWorker from './registerServiceWorker';
 import SptBody from './components/SptBody/SptBody';
+import {applySnapshot, onSnapshot} from 'mobx-state-tree';
+import {observer} from 'mobx-react';
 
 
 const sptStore: ISptStore = SptStore.create({
@@ -15,22 +17,31 @@ const sptStore: ISptStore = SptStore.create({
         mode: 'Вход',
         role: 'Anonymous'
     },
-    sptCalculationStore:{
+    sptCalculationStore: {
         price: 0
     },
     sptGoodStore: {
-        goods : []
+        goods: []
     },
     sptMaterialStore: {
-        materials : []
+        materials: []
     },
-    sptUserStore:{
-        users : []
+    sptUserStore: {
+        users: []
     }
 });
 
-class App extends React.Component <{ sptStore: ISptStore }>{
+const SptSnapshot = localStorage.cpcStore;
+global.console.log(SptSnapshot);
+if (SptSnapshot) {
+    const json = JSON.parse(SptSnapshot);
+    if (SptStore.is(json)) {
+        applySnapshot(sptStore, json);
+    }
+}
 
+@observer
+class App extends React.Component <{ sptStore: ISptStore }>{
     public render() {
         return (
             <div>
@@ -40,6 +51,10 @@ class App extends React.Component <{ sptStore: ISptStore }>{
         );
     }
 }
+
+onSnapshot(sptStore, snapshot => {
+    localStorage.setItem('cpcStore', JSON.stringify(snapshot));
+});
 
 ReactDOM.render(
     <BrowserRouter>
