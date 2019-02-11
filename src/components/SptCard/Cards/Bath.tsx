@@ -53,6 +53,7 @@ export default class SptCard extends React.Component <{
 
     public handleSubmitChangeCoefficient = () => {
         this.sptGoodService.updateCoefficient(this.state.coefficient, this.props.goodName);
+        this.props.sptStore.sptGoodStore.changeCoefficient(this.props.goodName,this.state.coefficient);
     };
 
     public render() {

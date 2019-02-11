@@ -83,6 +83,10 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
             <div>
             <div>{beforeRender()}</div>
             <div>
+                <div className="d-flex justify-content-between" id="nameAndButton">
+                    <h6 id="TableName">Список пользователей</h6>
+                    <Button color="primary" onClick={this.toggle}>Создать пользователя</Button>
+                </div>
                 <Table>
                     <thead>
                     <tr>
@@ -94,7 +98,6 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
                     {this.props.sptStore.sptUserStore.users.map((user, idx) => <Line key={idx} usermane={user.username} userId={user.userid}/>)}
                     </tbody>
                 </Table>
-                <Button color="primary" onClick={this.toggle}>Создать пользователя</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>Создать пользователя</ModalHeader>
                     <ModalBody>

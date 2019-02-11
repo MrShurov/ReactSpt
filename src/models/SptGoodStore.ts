@@ -21,6 +21,10 @@ export const SptGoodStore = types
             if (!foundItem) {
                 self.goods.push(good);
             }
+        },
+        changeCoefficient(goodName : string, coefficient : number){
+            // @ts-ignore
+            self.goods.find(i => i.goodName === goodName).coefficient = coefficient;
         }
     }));
 

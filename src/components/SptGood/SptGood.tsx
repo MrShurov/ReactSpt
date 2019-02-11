@@ -20,7 +20,6 @@ export default class SptGood extends React.Component <{ sptStore: ISptStore }> {
             this.sptGoodService.getGoods();
             return this.props.children;
         });
-
         return (
             <div>
                 <div>
