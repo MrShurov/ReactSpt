@@ -13,7 +13,7 @@ export default class SptCard extends React.Component <{
     sptStore: ISptStore, goodName: string, imageUrl: string, description: string,
     calculationUrl: string, coefficient: number
 },
-    { modal: boolean, coefficient: number}> {
+    { modal: boolean, coefficient: number, info: boolean }> {
 
     private sptCalculationService: ISptCalculationService = new SptCalculationService(this.props.sptStore);
     private sptGoodService: ISptGoodService = new SptGoodService(this.props.sptStore);
@@ -25,13 +25,20 @@ export default class SptCard extends React.Component <{
         super(props);
         this.state = {
             coefficient: this.props.coefficient,
-            modal: false,
+            info: false,
+            modal: false
         };
         this.toggle = this.toggle.bind(this);
     }
 
     public handleChangeCoefficient = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({coefficient: parseFloat(event.target.value)});
+        if (isNaN(parseFloat(event.target.value))) {
+            this.setState({info: true});
+            this.setState({coefficient: 0});
+        } else {
+            this.setState({coefficient: parseFloat(event.target.value)});
+            this.setState({info: false});
+        }
     };
 
     public handleOpen = () => this.setState({modal: true});
@@ -53,7 +60,7 @@ export default class SptCard extends React.Component <{
 
     public handleSubmitChangeCoefficient = () => {
         this.sptGoodService.updateCoefficient(this.state.coefficient, this.props.goodName);
-        this.props.sptStore.sptGoodStore.changeCoefficient(this.props.goodName,this.state.coefficient);
+        this.props.sptStore.sptGoodStore.changeCoefficient(this.props.goodName, this.state.coefficient);
     };
 
     public render() {
@@ -70,15 +77,22 @@ export default class SptCard extends React.Component <{
                         </div>
                         <div className="text-center">
                             {this.props.sptStore.current.role === 'ADMIN'
-                                ? <div className="d-flex justify-content-center">
-                                    <Input
-                                        className="col-4 text-center myInput"
-                                        name="coefficient"
-                                        id="coefficient"
-                                        onChange={this.handleChangeCoefficient}
-                                        value={this.state.coefficient}
-                                    />
-                                    <Button onClick={() => this.handleSubmitChangeCoefficient()} type="submit" color="success">Обновить</Button>
+                                ? <div>
+                                    {this.state.info
+                                        ? <p className="alert alert-info myAlert">Введите новую наценку</p>
+                                        : ''
+                                    }
+                                    <div className="d-flex justify-content-center">
+                                        <Input
+                                            className="col-4 text-center myInput"
+                                            name="coefficient"
+                                            id="coefficient"
+                                            onChange={this.handleChangeCoefficient}
+                                            value={this.state.coefficient}
+                                        />
+                                        <Button onClick={() => this.handleSubmitChangeCoefficient()} type="submit"
+                                                color="success">Обновить</Button>
+                                    </div>
                                 </div>
                                 : ''}
                             <Button className="resultBtn" onClick={this.toggle}>Рассчитать</Button>
@@ -92,7 +106,8 @@ export default class SptCard extends React.Component <{
                                             <form onSubmit={this.handleSubmit}>
                                                 <FormGroup>
                                                     <Col>
-                                                        <Input placeholder="Количество ванн" autoFocus name="countOfItems" id="countOfItems"/>
+                                                        <Input placeholder="Количество ванн" autoFocus
+                                                               name="countOfItems" id="countOfItems"/>
                                                     </Col>
                                                 </FormGroup>
                                                 <FormGroup>

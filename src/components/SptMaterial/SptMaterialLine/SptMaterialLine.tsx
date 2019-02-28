@@ -7,15 +7,18 @@ import {ISptMaterialService, SptMaterialService} from '../../../services/SptMate
 
 
 @observer
-export default class SptMaterialLine extends React.Component <{sptStore: ISptStore, id: number, materialName: string, measure: string,
-    price: number},{price : number}> {
+export default class SptMaterialLine extends React.Component <{
+    sptStore: ISptStore, id: number, materialName: string, measure: string,
+    price: number
+}, { price: number, info: boolean }> {
 
     private sptMaterialService: ISptMaterialService = new SptMaterialService(this.props.sptStore);
 
-    constructor(props: Readonly<{sptStore: ISptStore, id: number, materialName: string, measure: string, price: number}>) {
+    constructor(props: Readonly<{ sptStore: ISptStore, id: number, materialName: string, measure: string, price: number }>) {
         super(props);
         this.state = {
-            price : 0
+            info: false,
+            price: 0
         };
     }
 
@@ -24,29 +27,39 @@ export default class SptMaterialLine extends React.Component <{sptStore: ISptSto
     };
 
     public handleChangePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({price: parseFloat(event.target.value)});
+        if (isNaN(parseFloat(event.target.value))) {
+            this.setState({info: true});
+            this.setState({price: 0});
+        } else {
+            this.setState({price: parseFloat(event.target.value)});
+            this.setState({info: false});
+        }
     };
 
     public render() {
         return (
-                <tr>
-                    <th scope="row">{this.props.id}</th>
-                    <td>{this.props.materialName}</td>
-                    <td align="center">{this.props.measure}</td>
-                    <td align="center">{this.props.price}</td>
-                    <td align="center">
-                        <Input
-                            className="col-4 text-center myInput"
-                            name="price"
-                            id="price"
-                            onChange={this.handleChangePrice}
-                            value={this.state.price}
-                        />
-                    </td>
-                    <td>
-                        <Button onClick={() => this.handleSubmit()} type="submit" color="success" >Обновить</Button>
-                    </td>
-                </tr>
+            <tr>
+                <th scope="row">{this.props.id}</th>
+                <td>{this.props.materialName}</td>
+                <td align="center">{this.props.measure}</td>
+                <td align="center">{this.props.price}</td>
+                <td align="center">
+                    {this.state.info
+                        ? <p className="alert alert-info myAlert">Введите новую цену</p>
+                        : ''
+                    }
+                    <Input
+                        className="col-4 text-center myInput"
+                        name="price"
+                        id="price"
+                        onChange={this.handleChangePrice}
+                        value={this.state.price}
+                    />
+                </td>
+                <td>
+                    <Button onClick={() => this.handleSubmit()} type="submit" color="success">Обновить</Button>
+                </td>
+            </tr>
         );
     }
 }
