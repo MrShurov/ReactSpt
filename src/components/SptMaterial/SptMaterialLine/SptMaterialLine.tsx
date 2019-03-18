@@ -10,30 +10,23 @@ import {ISptMaterialService, SptMaterialService} from '../../../services/SptMate
 export default class SptMaterialLine extends React.Component <{
     sptStore: ISptStore, id: number, materialName: string, measure: string,
     price: number
-}, { price: number, info: boolean }> {
+}, { price: string }> {
 
     private sptMaterialService: ISptMaterialService = new SptMaterialService(this.props.sptStore);
 
     constructor(props: Readonly<{ sptStore: ISptStore, id: number, materialName: string, measure: string, price: number }>) {
         super(props);
         this.state = {
-            info: false,
-            price: 0
+            price: ''
         };
     }
 
     public handleSubmit = () => {
-        this.sptMaterialService.updateMaterial(this.state.price, this.props.materialName);
+        this.sptMaterialService.updateMaterial(parseFloat(this.state.price), this.props.materialName);
     };
 
     public handleChangePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (isNaN(parseFloat(event.target.value))) {
-            this.setState({info: true});
-            this.setState({price: 0});
-        } else {
-            this.setState({price: parseFloat(event.target.value)});
-            this.setState({info: false});
-        }
+        this.setState({price: event.target.value});
     };
 
     public render() {
@@ -44,12 +37,9 @@ export default class SptMaterialLine extends React.Component <{
                 <td align="center">{this.props.measure}</td>
                 <td align="center">{this.props.price}</td>
                 <td align="center">
-                    {this.state.info
-                        ? <p className="alert alert-info myAlert">Введите новую цену</p>
-                        : ''
-                    }
                     <Input
                         className="col-4 text-center myInput"
+                        type="number"
                         name="price"
                         id="price"
                         onChange={this.handleChangePrice}

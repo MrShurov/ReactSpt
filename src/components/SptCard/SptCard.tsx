@@ -9,7 +9,7 @@ import TableWithStrapping from './Cards/TableWithStrapping';
 @observer
 export default class SptCard extends React.Component <{
     sptStore: ISptStore, goodName: string, imageUrl: string, description: string,
-    calculationUrl: string, type: string, coefficient: number
+    calculationUrl: string, type: string, coefficient: string
 }> {
 
 

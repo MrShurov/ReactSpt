@@ -11,21 +11,20 @@ import ModalBody from 'reactstrap/lib/ModalBody';
 @observer
 export default class SptCard extends React.Component <{
     sptStore: ISptStore, goodName: string, imageUrl: string, description: string,
-    calculationUrl: string, coefficient: number
+    calculationUrl: string, coefficient: string
 },
-    { modal: boolean, coefficient: number, perforation: string, info: boolean }> {
+    { modal: boolean, coefficient: string, perforation: string}> {
 
     private sptCalculationService: ISptCalculationService = new SptCalculationService(this.props.sptStore);
     private sptGoodService: ISptGoodService = new SptGoodService(this.props.sptStore);
 
     constructor(props: Readonly<{
         sptStore: ISptStore, modal: boolean, goodName: string, imageUrl: string, description: string,
-        calculationUrl: string, coefficient: number
+        calculationUrl: string, coefficient: string
     }>) {
         super(props);
         this.state = {
             coefficient: this.props.coefficient,
-            info: false,
             modal: false,
             perforation: 'No'
         };
@@ -33,13 +32,7 @@ export default class SptCard extends React.Component <{
     }
 
     public handleChangeCoefficient = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (isNaN(parseFloat(event.target.value))) {
-            this.setState({info: true});
-            this.setState({coefficient: 0});
-        } else {
-            this.setState({coefficient: parseFloat(event.target.value)});
-            this.setState({info: false});
-        }
+        this.setState({coefficient: event.target.value});
     };
 
     public handlePerforation = () => {
@@ -71,7 +64,8 @@ export default class SptCard extends React.Component <{
     };
 
     public handleSubmitChangeCoefficient = () => {
-        this.sptGoodService.updateCoefficient(this.state.coefficient, this.props.goodName);
+        this.sptGoodService.updateCoefficient(parseFloat(this.state.coefficient), this.props.goodName);
+        this.props.sptStore.sptGoodStore.changeCoefficient(this.props.goodName, parseFloat(this.state.coefficient));
     };
 
     public render() {
@@ -89,14 +83,11 @@ export default class SptCard extends React.Component <{
                         <div className="text-center">
                             {this.props.sptStore.current.role === 'ADMIN'
                                 ? <div>
-                                    {this.state.info
-                                        ? <p className="alert alert-info myAlert">Введите новую наценку</p>
-                                        : ''
-                                    }
                                     <div className="d-flex justify-content-center">
                                         <Input
                                             className="col-4 text-center myInput"
                                             name="coefficient"
+                                            type="number"
                                             id="coefficient"
                                             onChange={this.handleChangeCoefficient}
                                             value={this.state.coefficient}
