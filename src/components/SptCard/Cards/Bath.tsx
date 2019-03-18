@@ -156,7 +156,7 @@ export default class SptCard extends React.Component <{
                                 {this.props.sptStore.sptCalculationStore.price !== 0
                                     ? <ModalFooter className="justify-content-between">
                                         <div className="calculationFooter">
-                                            Стоимость: {this.props.sptStore.sptCalculationStore.price}
+                                            Стоимость: {this.props.sptStore.sptCalculationStore.price} BYN
                                         </div>
                                     </ModalFooter>
                                     : ''
