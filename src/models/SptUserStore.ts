@@ -3,6 +3,7 @@ import {Instance, types} from 'mobx-state-tree';
 export const User = types.model({
     bankRequisites: types.string,
     companyName: types.string,
+    email: types.string,
     password: types.string,
     paymentAccount: types.string,
     postCode: types.string,

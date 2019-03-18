@@ -51,11 +51,13 @@ export class SptUserService implements ISptUserService {
         const tel: string = 'tel';
         const roles: string = 'roles';
         const uuid: string = 'uuid';
+        const email: string = 'email';
         JSON.stringify(response.data, (key, value) => {
             this.sptParserService.parseArrayOrValue(value, (item: object) => {
                 this.sptStore.sptUserStore.add(User.create({
                     bankRequisites: item[bankRequisites],
                     companyName: item[companyName],
+                    email : item[email],
                     password: item[password],
                     paymentAccount: item[paymentAccount],
                     postCode: item[postCode],
