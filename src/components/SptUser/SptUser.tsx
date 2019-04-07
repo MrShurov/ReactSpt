@@ -14,13 +14,15 @@ import {ISptStore} from '../../models/SptStore';
 import {ISptUserService, SptUserService} from '../../services/SptUserService';
 import {observer} from 'mobx-react';
 
-const Line = (parameters: {usermane: string, userId: number}) => {
+const Line = (parameters: {usermane: string, userId: number, email: string}) => {
     const username = parameters.usermane;
     const id = parameters.userId;
+    const email = parameters.email;
     return (
         <tr>
             <th scope="row">{id}</th>
             <td>{username}</td>
+            <td>{email}</td>
         </tr>
     );
 };
@@ -92,10 +94,12 @@ export default class SptUser extends React.Component <{ sptStore: ISptStore }, {
                     <tr>
                         <th>Номер</th>
                         <th>Имя пользователя</th>
+                        <th>Email</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.sptStore.sptUserStore.users.map((user, idx) => <Line key={idx} usermane={user.username} userId={user.userid}/>)}
+                    {this.props.sptStore.sptUserStore.users.map((user, idx) => <Line key={idx} usermane={user.username}
+                                                                                     userId={user.userid} email={user.email}/>)}
                     </tbody>
                 </Table>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
