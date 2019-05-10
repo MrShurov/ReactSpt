@@ -7,36 +7,46 @@ import {ISptStore} from '../../../models/SptStore';
 import {observer} from 'mobx-react';
 import {ISptGoodService, SptGoodService} from '../../../services/SptGoodService';
 import ModalBody from 'reactstrap/lib/ModalBody';
+import Fab from '@material-ui/core/Fab';
+import {Create} from '@material-ui/icons';
+
+const styles = {
+    editButton: {
+        bottom: '10px',
+        height: '30px',
+        position: 'absolute' as 'absolute',
+        right: '10px',
+        width: '30px'
+    },
+    icon: {
+        height: '15px',
+        width: '15px',
+    }
+};
 
 @observer
 export default class SptCard extends React.Component <{
     sptStore: ISptStore, goodName: string, imageUrl: string, description: string,
     calculationUrl: string, coefficient: string
 },
-    { modal: boolean, coefficient: string }> {
+    { modal: boolean, coefficient: string,modalCoefficient : boolean }> {
 
     private sptCalculationService: ISptCalculationService = new SptCalculationService(this.props.sptStore);
     private sptGoodService: ISptGoodService = new SptGoodService(this.props.sptStore);
 
     constructor(props: Readonly<{
-        sptStore: ISptStore, modal: boolean, goodName: string, imageUrl: string, description: string,
+        sptStore: ISptStore, modal: boolean,modalCoefficient : boolean, goodName: string, imageUrl: string, description: string,
         calculationUrl: string, coefficient: string
     }>) {
         super(props);
         this.state = {
             coefficient: this.props.coefficient,
-            modal: false
+            modal: false,
+            modalCoefficient : false
         };
         this.toggle = this.toggle.bind(this);
+        this.toggleCoefficient = this.toggleCoefficient.bind(this);
     }
-
-    public handleChangeCoefficient = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({coefficient: event.target.value});
-    };
-
-    public handleOpen = () => this.setState({modal: true});
-
-    public handleClose = () => this.setState({modal: false});
 
     public toggle() {
         this.setState({
@@ -45,15 +55,24 @@ export default class SptCard extends React.Component <{
         this.props.sptStore.sptCalculationStore.setPrice(0);
     }
 
+    public toggleCoefficient() {
+        this.setState({
+            modalCoefficient: !this.state.modalCoefficient
+        });
+    }
+
     public handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         this.sptCalculationService.calculate(data, this.props.calculationUrl);
     };
 
-    public handleSubmitChangeCoefficient = () => {
-        this.sptGoodService.updateCoefficient(parseFloat(this.state.coefficient), this.props.goodName);
-        this.props.sptStore.sptGoodStore.changeCoefficient(this.props.goodName, parseFloat(this.state.coefficient));
+    public handleSubmitChangeCoefficient = (event: React.MouseEvent<HTMLFormElement>) => {
+        const coefficient : string = 'coefficient';
+        const data = new FormData(event.currentTarget);
+        this.sptGoodService.updateCoefficient(Number.parseFloat(data[coefficient]), this.props.goodName);
+        this.props.sptStore.sptGoodStore.changeCoefficient(this.props.goodName, Number.parseFloat(data[coefficient]));
+        this.setState({coefficient: data[coefficient]});
     };
 
     public render() {
@@ -71,18 +90,31 @@ export default class SptCard extends React.Component <{
                         <div className="text-center">
                             {this.props.sptStore.current.role === 'ADMIN'
                                 ? <div>
-                                    <div className="d-flex justify-content-center">
-                                        <Input
-                                            className="col-4 text-center myInput"
-                                            name="coefficient"
-                                            type="number"
-                                            id="coefficient"
-                                            onChange={this.handleChangeCoefficient}
-                                            value={this.state.coefficient}
-                                        />
-                                        <Button onClick={() => this.handleSubmitChangeCoefficient()} type="submit"
-                                                color="success">Обновить</Button>
-                                    </div>
+                                    <Fab className="edit_button" onClick={() => {this.toggleCoefficient();}} style={styles.editButton}>
+                                        <Create className="edit_icon" style={styles.icon}>edit_icon</Create>
+                                    </Fab>
+                                    <Modal isOpen={this.state.modalCoefficient} toggle={this.toggleCoefficient}>
+                                        <ModalHeader toggle={this.toggleCoefficient}>
+                                            Обновить наценку : текущая {this.state.coefficient}
+                                        </ModalHeader>
+                                        <ModalBody>
+                                            <div>
+                                                <Col>
+                                                    <form onSubmit={this.handleSubmitChangeCoefficient}>
+                                                        <FormGroup>
+                                                            <Col>
+                                                                <Input placeholder="Наценка" autoFocus
+                                                                       name="coefficient" id="coefficient"/>
+                                                            </Col>
+                                                        </FormGroup>
+                                                        <div className="text-center">
+                                                            <Button type="submit">Обновить</Button>
+                                                        </div>
+                                                    </form>
+                                                </Col>
+                                            </div>
+                                        </ModalBody>
+                                    </Modal>
                                 </div>
                                 : ''}
                             <Button className="resultBtn" onClick={this.toggle}>Рассчитать</Button>

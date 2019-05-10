@@ -22,7 +22,7 @@ export class SptGoodService implements ISptGoodService {
     }
 
     public getGoods() {
-        const requestUrl = '/goods/';
+        const requestUrl = 'http://134.209.244.219:8080/spt/goods/';
         return this.restClient.get(requestUrl,
             (response) => {
                 this.parseData(response, this.sptStore);
@@ -31,7 +31,7 @@ export class SptGoodService implements ISptGoodService {
     }
 
     public updateCoefficient(coefficient: number, goodName: string){
-        const requestUrl = '/goods/updateCoefficient?coefficient=' + coefficient + '&goodName=' + goodName;
+        const requestUrl = 'http://134.209.244.219:8080/spt/goods/updateCoefficient?coefficient=' + coefficient + '&goodName=' + goodName;
         this.restClient.put(requestUrl,
             (response) => {
                 this.parseAndUpdateData(response,this.sptStore);
@@ -48,7 +48,7 @@ export class SptGoodService implements ISptGoodService {
         const coefficient : string = 'coefficient';
         JSON.stringify(response.data, (key, value) => {
             this.sptParserService.parseArrayOrValue(value, (item: object) => {
-                this.sptStore.sptGoodStore.add(Good.create({calculationUrl: item[calculationUrl],
+                this.sptStore.sptGoodStore.add(Good.create({calculationUrl: 'http://134.209.244.219:8080/spt' + item[calculationUrl],
                     coefficient : item[coefficient],description : item[description],goodName : item[goodName],
                     imageUrl : item[imageUrl], type : item[type]}));
             });

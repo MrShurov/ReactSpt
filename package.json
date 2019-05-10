@@ -9,23 +9,25 @@
     "start": "npm-run-all -p watch-css start-js"
   },
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
+    "bootstrap": "^4.1.3",
     "classnames": "^2.2.6",
+    "create-react-component-folder": "^0.1.25",
+    "enzyme": "^3.6.0",
     "jsonpath": "^1.0.0",
     "mobx": "^5.5.0",
     "mobx-react": "^5.2.8",
     "mobx-state-tree": "^3.5.0",
+    "node-sass-chokidar": "^1.3.3",
+    "npm-run-all": "^4.1.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "^3.1.0",
+    "react-scripts-ts": "^4.0.8",
     "reactstrap": "^6.4.0",
-    "bootstrap": "^4.1.3",
-    "create-react-component-folder": "^0.1.25",
-    "enzyme": "^3.6.0",
-    "node-sass-chokidar": "^1.3.3",
-    "npm-run-all": "^4.1.3",
     "typescript": "^3.1.1"
   },
   "devDependencies": {
@@ -46,9 +48,10 @@
     "scss",
     "uppercase"
   ],
-  "proxy": {
-    "/*": {
-      "target": "http://localhost:8080"
-    }
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

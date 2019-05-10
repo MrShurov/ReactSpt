@@ -49,7 +49,7 @@ export default class SptLogin extends React.Component <{ sptStore: ISptStore }, 
     }
 
     public login(form: HTMLFormElement) {
-        const requestUrl = '/authentication';
+        const requestUrl = 'http://134.209.244.219:8080/spt/authentication';
         const data = new FormData(form);
         this.restClient.post(requestUrl, data,
             (response) => {

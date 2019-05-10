@@ -22,7 +22,7 @@ export class SptMaterialService implements ISptMaterialService {
     }
 
     public updateMaterial(price : number, materialName : string) {
-        const requestUrl = '/material?materialName=' + materialName + '&price=' + price;
+        const requestUrl = 'http://134.209.244.219:8080/spt/material?materialName=' + materialName + '&price=' + price;
         this.restClient.put(requestUrl,
             (response) => {
                 this.parseAndUpdateData(response,this.sptStore);
@@ -31,7 +31,7 @@ export class SptMaterialService implements ISptMaterialService {
     }
 
     public getMaterial() {
-        const requestUrl = '/material';
+        const requestUrl = 'http://134.209.244.219:8080/spt/material';
         return this.restClient.get(requestUrl,
             (response) => {
                 this.parseData(response, this.sptStore);

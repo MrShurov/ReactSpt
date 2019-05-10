@@ -22,7 +22,7 @@ export class SptUserService implements ISptUserService {
     }
 
     public getUsers() {
-        const requestUrl = '/user/getAll';
+        const requestUrl = 'http://134.209.244.219:8080/spt/user/getAll';
         return this.restClient.get(requestUrl,
             (response) => {
                 this.parseData(response, this.sptStore);
@@ -31,7 +31,7 @@ export class SptUserService implements ISptUserService {
     }
 
     public createUser(data: FormData) {
-        const requestUrl = '/user';
+        const requestUrl = 'http://134.209.244.219:8080/spt/user';
         return this.restClient.post(requestUrl, data,
             (response) => {
                 this.getUsers();
