@@ -2,14 +2,15 @@ import axios, {AxiosError, AxiosInstance, AxiosResponse} from 'axios';
 
 export default class RestClient {
     private axiosRest: AxiosInstance;
+    private defaultPath : string;
 
     constructor(uuid: string) {
         this.axiosRest = axios.create({
             headers: {
-                'UUID': uuid
-            },
-            timeout: 2000,
+                'uuid': uuid
+            }
         });
+        this.defaultPath = 'http://134.209.244.219:8080/spt';
     }
 
     public get(
@@ -18,7 +19,7 @@ export default class RestClient {
         errored: (error: AxiosError) => void
     ) {
         return this.axiosRest
-            .get(path)
+            .get(this.defaultPath + path)
             .then((result: AxiosResponse) => {
                 //global.console.log(`GET ${path}`);
                 //global.console.log(`result: ${JSON.stringify(result)};`);
@@ -38,7 +39,7 @@ export default class RestClient {
         errored: (error: AxiosError) => void
     ) {
         return this.axiosRest
-            .post(path, data)
+            .post(this.defaultPath + path, data)
             .then((result: AxiosResponse) => {
                 global.console.log(`POST ${path}`);
                 global.console.log(`result: ${JSON.stringify(result)}`);
@@ -57,7 +58,7 @@ export default class RestClient {
         errored: (error: AxiosError) => void
     ) {
         return this.axiosRest
-            .delete(path)
+            .delete(this.defaultPath + path)
             .then((result: AxiosResponse) => {
                 global.console.log(`DELETE ${path}`);
                 global.console.log(`result: ${JSON.stringify(result)}`);
@@ -76,7 +77,7 @@ export default class RestClient {
         errored: (error: AxiosError) => void
     ) {
         return this.axiosRest
-            .put(path)
+            .put(this.defaultPath + path)
             .then((result: AxiosResponse) => {
                 global.console.log(`PUT ${path}`);
                 global.console.log(`result: ${JSON.stringify(result)}`);
