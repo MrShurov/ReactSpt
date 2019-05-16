@@ -11,6 +11,8 @@ export default class RestClient {
             }
         });
         this.defaultPath = 'http://134.209.244.219:8080/spt';
+        // dev
+        //this.defaultPath = '';
     }
 
     public get(
