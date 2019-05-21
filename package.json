@@ -48,5 +48,10 @@
     "typescript",
     "scss",
     "uppercase"
-  ]
+  ],
+  "proxy": {
+    "/*": {
+      "target": "http://localhost:8080"
+    }
+  }
 }
