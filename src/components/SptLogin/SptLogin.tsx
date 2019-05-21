@@ -51,7 +51,7 @@ export default class SptLogin extends React.Component <{ sptStore: ISptStore }, 
     public login(form: HTMLFormElement) {
         const requestUrl = '/authentication';
         const data = new FormData(form);
-        this.restClient.post(requestUrl, data,
+        this.restClient.post(requestUrl, {username :data.get('username'),password : data.get('password')},
             (response) => {
                 this.parseData(response, this.props.sptStore);
             },

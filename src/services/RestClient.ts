@@ -11,7 +11,7 @@ export default class RestClient {
       },
       timeout: 2000,
     });
-    this.defaultPath = 'http://134.209.244.219:8080/spt';
+    this.defaultPath = 'spt';
     // dev
     //this.defaultPath = '';
   }
