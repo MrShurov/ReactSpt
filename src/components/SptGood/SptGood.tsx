@@ -33,7 +33,7 @@ export default class SptGood extends React.Component <{ sptStore: ISptStore }> {
                                                                                         imageUrl={good.imageUrl}
                                                                                         calculationUrl={good.calculationUrl}
                                                                                         type={good.type}
-                                                                                        coefficient={good.coefficient.toString()}/>)}
+                                                                                        coefficient={good.coefficient}/>)}
                 </CardGroup>
             </div>
         );

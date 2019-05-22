@@ -11,9 +11,7 @@ export default class RestClient {
       },
       timeout: 2000,
     });
-    //this.defaultPath = 'spt';
-    // dev
-    this.defaultPath = '';
+    this.defaultPath = 'spt';
   }
 
   public get(
